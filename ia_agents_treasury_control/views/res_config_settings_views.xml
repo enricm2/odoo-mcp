@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_iatc" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.iatc</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority">50</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+
+                <app data-string="IA Treasury Control"
+                     string="IA Treasury Control"
+                     name="ia_agents_treasury_control">
+
+                    <!-- ══ CONEXIÓN CLAUDE.AI ════════════════════════════════ -->
+                    <block title="Conectar con claude.ai" name="iatc_claude_connect">
+                        <setting string="Instrucciones"
+                                 help="Copia estos tres valores y pégalos en claude.ai → Settings → Integrations → Add custom connector">
+                            <div style="font-size:13px; background:#e8f0ff; border-left:4px solid #1a6396; padding:10px 14px; border-radius:0 4px 4px 0;">
+                                Abre <strong>claude.ai → Settings → Integrations → Add custom connector</strong>,
+                                copia los valores de abajo y pega cada uno en su campo correspondiente. Pulsa <strong>Add</strong>.
+                            </div>
+                        </setting>
+                        <setting string="URL del servidor"
+                                 help="Pégala en el campo URL del conector en claude.ai">
+                            <field name="iatc_mcp_endpoint_url" readonly="1"
+                                   style="font-family:monospace; background:#f0f4f8;"/>
+                        </setting>
+                        <setting string="OAuth Client ID"
+                                 help="Pégalo en el campo OAuth Client ID (Advanced settings) en claude.ai">
+                            <field name="iatc_mcp_oauth_client_id" readonly="1"
+                                   style="font-family:monospace; background:#f0f4f8;"/>
+                        </setting>
+                        <setting string="OAuth Client Secret"
+                                 help="Pégalo en el campo OAuth Client Secret (Advanced settings) en claude.ai">
+                            <field name="iatc_mcp_secret_token" readonly="1"
+                                   style="font-family:monospace; background:#f0f4f8;"/>
+                            <div class="mt8">
+                                <button name="action_generate_mcp_token" type="object"
+                                        string="Regenerar token" class="btn btn-secondary btn-sm"
+                                        confirm="¿Seguro? Tendrás que actualizar el OAuth Client Secret en claude.ai con el nuevo valor."/>
+                            </div>
+                        </setting>
+                    </block>
+
+                    <!-- ══ LICENCIA ══════════════════════════════════════════ -->
+                    <block title="Licencia SaaS" name="iatc_license">
+                        <setting string="Clave de licencia"
+                                 help="Proporcionada por Uniasser al contratar la suscripción. Formato: XXXX-XXXX-XXXX-XXXX">
+                            <field name="iatc_license_key" password="True"
+                                   placeholder="XXXX-XXXX-XXXX-XXXX"/>
+                            <div class="mt8">
+                                <button name="action_validate_license" type="object"
+                                        string="Validar licencia ahora" class="btn btn-primary btn-sm"/>
+                            </div>
+                        </setting>
+                        <setting string="Estado de la licencia">
+                            <field name="iatc_license_status" readonly="1" class="fw-bold"/>
+                            <div class="mt4">
+                                <span class="o_form_label">Cliente: </span>
+                                <field name="iatc_license_customer" readonly="1" nolabel="1"/>
+                            </div>
+                            <div class="mt4">
+                                <span class="o_form_label">Válida hasta: </span>
+                                <field name="iatc_license_expires" readonly="1" nolabel="1"/>
+                            </div>
+                        </setting>
+                    </block>
+
+                    <!-- ══ WHATSAPP ══════════════════════════════════════════ -->
+                    <block title="WhatsApp — Meta Cloud API" name="iatc_whatsapp">
+                        <setting string="Token de acceso Meta"
+                                 help="Token permanente de la app en Meta for Developers → Tu app → WhatsApp → API Setup">
+                            <field name="iatc_whatsapp_token" password="True"
+                                   placeholder="EAANcMZ..."/>
+                        </setting>
+                        <setting string="Phone ID"
+                                 help="ID numérico del número de teléfono de la app en Meta">
+                            <field name="iatc_whatsapp_phone_id"
+                                   placeholder="1201254209727479"/>
+                        </setting>
+                        <setting string="Número destino por defecto"
+                                 help="Número al que enviar los informes. Formato sin '+': 34685525090">
+                            <field name="iatc_whatsapp_default_number"
+                                   placeholder="34685525090"/>
+                        </setting>
+                    </block>
+
+                    <!-- ══ OPCIONES AVANZADAS ════════════════════════════════ -->
+                    <block title="Opciones avanzadas" name="iatc_advanced">
+                        <setting string="Modo desarrollo"
+                                 help="Omite la verificación de licencia. Usar solo para pruebas locales. DESACTIVAR en producción.">
+                            <field name="iatc_dev_mode"/>
+                            <div class="mt4" style="color:#b45309; font-size:12px;">
+                                ⚠️ Con esta opción activa el módulo funciona sin licencia válida.
+                            </div>
+                        </setting>
+                        <setting string="Email por defecto (Partes de horas)"
+                                 help="Usuario Odoo al que se imputan los partes enviados por WhatsApp cuando no se especifica usuario.">
+                            <field name="iatc_default_timesheet_email"
+                                   placeholder="usuario@empresa.com"/>
+                        </setting>
+                        <setting string="Días de previsión de caja">
+                            <field name="iatc_forecast_days"/>
+                        </setting>
+                        <setting string="Confianza mínima conciliación (0.0–1.0)">
+                            <field name="iatc_reconciliation_threshold"/>
+                        </setting>
+                        <setting string="% alerta variación fiscal (0.0–1.0)">
+                            <field name="iatc_tax_alert_pct"/>
+                        </setting>
+                    </block>
+
+                    <!-- ══ OPEN BANKING ══════════════════════════════════════ -->
+                    <block title="Open Banking — conciliación bancaria automática (opcional)" name="iatc_banking">
+                        <setting string="Nordigen / GoCardless (gratuito)"
+                                 help="Credenciales para conciliación bancaria automática. Regístrate en nordigen.com">
+                            <field name="iatc_nordigen_secret_id" password="True"
+                                   placeholder="Secret ID"/>
+                            <field name="iatc_nordigen_secret_key" password="True"
+                                   placeholder="Secret Key"/>
+                        </setting>
+                        <setting string="Plaid (alternativa de pago)">
+                            <field name="iatc_plaid_client_id" password="True"
+                                   placeholder="Client ID"/>
+                            <field name="iatc_plaid_secret" password="True"
+                                   placeholder="Secret"/>
+                            <field name="iatc_plaid_env"/>
+                        </setting>
+                    </block>
+
+                    <!-- ══ EMAIL IMAP ════════════════════════════════════════ -->
+                    <block title="Email IMAP — facturas de proveedores (opcional)" name="iatc_imap">
+                        <setting string="Configuración IMAP"
+                                 help="Buzón donde llegan las facturas de proveedores en PDF. El módulo las importa automáticamente a Odoo.">
+                            <field name="iatc_imap_host" placeholder="imap.gmail.com"/>
+                            <field name="iatc_imap_user" placeholder="facturas@empresa.com"/>
+                            <field name="iatc_imap_password" password="True"/>
+                            <field name="iatc_imap_folder" placeholder="Facturas"/>
+                        </setting>
+                    </block>
+
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>
