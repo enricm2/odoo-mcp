@@ -116,6 +116,6 @@ Web:     https://www.uniasser.com
     "application": True,
     "auto_install": False,
     "post_init_hook": "post_init_hook",
-    "price": 0,
+    "price": 189.00,
     "currency": "EUR",
 }
