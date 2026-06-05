@@ -1,495 +1,295 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-<meta charset="utf-8"/>
-<title>IA Agents Treasury Control — Uniasser Consulting S.L.</title>
+<meta charset="UTF-8">
 <style>
-  body { font-family: Arial, sans-serif; color: #333; max-width: 960px; margin: 0 auto; padding: 20px; }
-  h1 { color: #1a6396; border-bottom: 3px solid #1a6396; padding-bottom: 8px; }
-  h2 { color: #1a6396; margin-top: 40px; border-bottom: 1px solid #d0dce8; padding-bottom: 4px; }
-  h3 { color: #2c7bb3; margin-top: 20px; }
-  .badge { display: inline-block; background: #1a6396; color: #fff; border-radius: 4px; padding: 2px 10px; font-size: 12px; margin-right: 4px; }
-  .badge-green { background: #27ae60; }
-  .badge-orange { background: #e67e22; }
-  .badge-gray { background: #7f8c8d; }
-  .header-banner { display: flex; align-items: center; gap: 24px; background: #1B3A6B; border-radius: 10px; padding: 20px 28px; margin-bottom: 24px; }
-  .header-banner img { width: 90px; height: 90px; border-radius: 8px; background: #fff; padding: 4px; }
-  .header-banner-text h1 { color: #fff; border: none; margin: 0 0 4px; font-size: 28px; }
-  .header-banner-text p { color: #b0c4de; margin: 0; font-size: 14px; }
-  .header-banner-text .badges { margin-top: 10px; }
-  .step-row { display: flex; align-items: flex-start; gap: 12px; background: #f0f7ff; border-left: 4px solid #1a6396; padding: 14px 16px; margin: 10px 0; border-radius: 0 6px 6px 0; }
-  .step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; min-width: 28px; background: #1a6396; color: #fff; border-radius: 50%; font-weight: bold; font-size: 14px; }
-  .step-body { flex: 1; }
-  .step-body strong { display: block; margin-bottom: 4px; color: #1a6396; font-size: 15px; }
-  .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
-  .tool-box { background: #fafafa; border: 1px solid #dde; border-radius: 6px; padding: 14px 18px; }
-  .tool-box h3 { margin-top: 0; color: #1a6396; font-size: 15px; }
-  .tool-name { font-family: monospace; background: #e8f0f8; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
-  .example { background: #f5f5f5; border-left: 3px solid #27ae60; padding: 8px 12px; margin: 6px 0; border-radius: 0 4px 4px 0; font-style: italic; color: #444; font-size: 14px; }
-  .warning { background: #fff8e1; border-left: 4px solid #f39c12; padding: 10px 14px; border-radius: 0 4px 4px 0; margin: 14px 0; }
-  .tip { background: #e8f8f0; border-left: 4px solid #27ae60; padding: 10px 14px; border-radius: 0 4px 4px 0; margin: 14px 0; }
-  .info { background: #e8f0ff; border-left: 4px solid #1a6396; padding: 10px 14px; border-radius: 0 4px 4px 0; margin: 14px 0; }
-  .connector-box { background: #fff; border: 2px solid #1a6396; border-radius: 8px; padding: 18px 22px; margin: 14px 0; }
-  .connector-row { display: flex; align-items: center; margin: 8px 0; gap: 12px; }
-  .connector-label { font-weight: 600; min-width: 160px; color: #555; font-size: 13px; }
-  .connector-value { font-family: monospace; background: #f0f4f8; padding: 6px 12px; border-radius: 4px; font-size: 13px; flex: 1; border: 1px solid #ccd; }
-  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
-  th { background: #1a6396; color: #fff; padding: 8px 12px; text-align: left; }
-  td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
-  tr:nth-child(even) td { background: #f8f8f8; }
-  code { font-family: monospace; background: #eef; padding: 1px 5px; border-radius: 3px; font-size: 13px; }
-  pre { background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 12px 16px; font-size: 12px; overflow-x: auto; line-height: 1.5; }
-  ul, ol { padding-left: 22px; }
-  li { margin-bottom: 6px; line-height: 1.5; }
-  details { border: 1px solid #ccd; border-radius: 6px; margin: 14px 0; }
-  summary { padding: 10px 14px; cursor: pointer; font-weight: 600; color: #1a6396; background: #f0f7ff; border-radius: 6px; user-select: none; }
-  details[open] summary { border-radius: 6px 6px 0 0; }
-  details .details-body { padding: 14px 18px; }
-  .section-intro { font-size: 15px; color: #555; margin-bottom: 16px; }
-  .req-list { background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 6px; padding: 14px 18px; }
-  .req-list li { margin-bottom: 4px; }
-  @media (max-width: 640px) {
-    .tool-grid { grid-template-columns: 1fr; }
-    .connector-row { flex-direction: column; }
-    .connector-label { min-width: auto; }
-    .header-banner { flex-direction: column; text-align: center; }
-  }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #2c3e50; line-height: 1.6; margin: 0; }
+  .hero { background: linear-gradient(135deg, #1a2980, #26d0ce); color: white; padding: 48px 40px; text-align: center; }
+  .hero h1 { font-size: 2.6rem; margin: 0 0 12px; font-weight: 800; }
+  .hero p { font-size: 1.15rem; opacity: .9; max-width: 680px; margin: 0 auto; }
+  .badge { display: inline-block; background: rgba(255,255,255,.2); border-radius: 20px; padding: 4px 14px; font-size: .85rem; margin-top: 16px; }
+  .section { padding: 40px 40px 32px; border-bottom: 1px solid #eef0f3; }
+  .section:last-child { border-bottom: none; }
+  h2 { font-size: 1.5rem; color: #1a2980; border-left: 4px solid #26d0ce; padding-left: 12px; margin-top: 0; }
+  h3 { font-size: 1.1rem; color: #34495e; margin-top: 24px; }
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 20px; }
+  .feature-card { background: #f8f9fc; border-radius: 10px; padding: 20px; border: 1px solid #e8eaf0; }
+  .feature-card .icon { font-size: 2rem; margin-bottom: 10px; }
+  .feature-card h4 { margin: 0 0 6px; font-size: 1rem; color: #1a2980; }
+  .feature-card p { margin: 0; font-size: .88rem; color: #636e7b; }
+  .screenshot-wrap { margin: 24px auto; border-radius: 12px; overflow: hidden; box-shadow: 0 6px 30px rgba(0,0,0,.13); border: 1px solid #e0e4ec; max-width: 860px; }
+  .screenshot-wrap img { display: block; width: 100%; max-width: 900px; margin: 0 auto; height: auto; }
+  .caption { text-align: center; font-size: .82rem; color: #888; margin-top: 8px; font-style: italic; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .92rem; }
+  th { background: #1a2980; color: white; padding: 10px 14px; text-align: left; }
+  td { padding: 9px 14px; border-bottom: 1px solid #eef0f3; }
+  tr:hover td { background: #f5f7ff; }
+  code { background: #f0f2f8; border-radius: 4px; padding: 2px 7px; font-size: .88em; color: #c0392b; }
+  pre { background: #1e2740; color: #a8d8a8; border-radius: 8px; padding: 18px 20px; overflow-x: auto; font-size: .88rem; line-height: 1.5; }
+  .tip { background: #eaf7fb; border-left: 4px solid #26d0ce; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 16px 0; font-size: .9rem; }
+  .warn { background: #fff8e1; border-left: 4px solid #f9a825; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 16px 0; font-size: .9rem; }
+  .step { display: flex; gap: 16px; align-items: flex-start; margin: 14px 0; }
+  .step-num { background: #1a2980; color: white; border-radius: 50%; width: 30px; height: 30px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .9rem; }
+  .step-body { flex: 1; padding-top: 4px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } .hero h1 { font-size: 1.8rem; } .section { padding: 28px 20px; } }
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<!-- CABECERA -->
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<div class="header-banner">
-  <img src="/ia_agents_treasury_control/static/src/img/icon.png" alt="Uniasser Consulting logo"/>
-  <div class="header-banner-text">
-    <h1>IA Agents Treasury Control</h1>
-    <p>Agentes de IA financieros · Conector MCP nativo para claude.ai y Claude Desktop</p>
-    <div class="badges">
-      <span class="badge">Odoo 16 · 17 · 18 · 19</span>
-      <span class="badge badge-green">claude.ai</span>
-      <span class="badge badge-orange">MCP 2024-11-05</span>
-      <span class="badge badge-gray">Uniasser Consulting S.L.</span>
+<div class="hero">
+  <img src="vantis-rect-512x128-transparent.png" alt="Vantis" style="height:64px;margin-bottom:20px;display:block;margin-left:auto;margin-right:auto;"/>
+  <h1>📊 RT Dashboard</h1>
+  <p>Real-time dashboards with AI and multi-channel alerts for Odoo. Department KPIs, push updates without page reload, AI-detected anomalies, and WhatsApp &amp; Telegram notifications.</p>
+  <span class="badge">Odoo 16 · 17 · 18 · 19 · OPL-1</span>
+  <br>
+  <div style="margin-top:16px;display:flex;align-items:center;justify-content:center;gap:8px;opacity:.8;">
+    <img src="uniasser_icon_256.png" alt="Uniasser Consulting" style="height:28px;"/>
+    <span style="font-size:.82rem;">Powered by Uniasser Consulting S.L.</span>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="section">
+  <h2>Dashboard View</h2>
+  <p>Access from the main menu <strong>RT Dashboard</strong>. The system automatically creates one dashboard per department. KPI cards show the current value, variation vs the previous period, and a historical mini-chart.</p>
+  <div class="screenshot-wrap">
+    <img src="kpi-dashboard.png" alt="RT Dashboard main view" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;"/>
+  </div>
+  <p class="caption">Main dashboard — real-time KPI cards with status indicators, bar charts and historical area charts. Automatic updates without page reload.</p>
+  <div class="tip">
+    <strong>💡 LIVE indicator</strong>: The <code>⚡ LIVE</code> badge confirms the bus.bus connection is active. Data updates every time the cron evaluates a KPI (default every 60 seconds).
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="section">
+  <h2>Key Features</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="icon">⚡</div>
+      <h4>Real-time</h4>
+      <p>Automatic updates via <code>bus.bus</code> — no F5 needed. Any data change is reflected instantly.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🏢</div>
+      <h4>Multi-department</h4>
+      <p>Predefined KPIs for CEO, Sales, Marketing, CFO, CTO, Operations and HR.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🤖</div>
+      <h4>Built-in AI</h4>
+      <p>Anomaly detection, daily executive briefing and natural language KPI generator (Anthropic Claude).</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🔔</div>
+      <h4>Multi-channel alerts</h4>
+      <p>Dashboard notifications, WhatsApp Business API and Telegram Bot when a KPI crosses a threshold.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">📐</div>
+      <h4>Formula KPIs</h4>
+      <p>Combine KPIs with expressions: <code>{balance_57} / {burn_rate}</code> to calculate runway, ratios and margins.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🎨</div>
+      <h4>Icons &amp; Colors</h4>
+      <p>Visual emoji and Font Awesome selector. Accent color and icon size per KPI.</p>
     </div>
   </div>
 </div>
 
-<p class="section-intro">
-  Conecta <strong>claude.ai</strong> directamente con tu Odoo para gestionar tesorería,
-  fiscalidad, facturas y partes de horas desde lenguaje natural.
-  Solo tienes que preguntar — Claude consulta Odoo y te responde con los datos reales de tu empresa.
-</p>
+<!-- KPI DEFINITION -->
+<div class="section">
+  <h2>KPI Definition</h2>
+  <p>Menu → <strong>RT Dashboard → KPI Definitions</strong>. Create and configure any KPI from any Odoo model.</p>
+  <div class="screenshot-wrap">
+    <img src="kpi-definition.png" alt="KPI Definition form" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;"/>
+  </div>
+  <p class="caption">KPI definition form — identity fields, data source, thresholds and cached values.</p>
 
-<div class="warning">
-  <strong>Requiere suscripción SaaS activa.</strong>
-  Contacta con <a href="mailto:info@uniasser.com">info@uniasser.com</a> para obtener tu clave de licencia.
+  <h3>KPI Types</h3>
+  <div class="screenshot-wrap">
+    <img src="kpi-types.png" alt="KPI Types" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;"/>
+  </div>
+  <p class="caption">Standard KPIs aggregate a field from any Odoo model. Formula KPIs combine existing KPIs with arithmetic expressions.</p>
+
+  <table>
+    <tr><th>Type</th><th>When to use</th><th>Required fields</th></tr>
+    <tr><td><strong>Standard</strong></td><td>Aggregate a numeric field from any Odoo model</td><td>Model, Aggregation, Measure Field</td></tr>
+    <tr><td><strong>Formula</strong></td><td>Combine two or more existing KPIs with arithmetic</td><td>Formula expression (<code>{kpi_name}</code>)</td></tr>
+  </table>
+
+  <h3>Aggregation functions</h3>
+  <table>
+    <tr><th>Function</th><th>Description</th></tr>
+    <tr><td><code>count</code></td><td>Count records (no Measure Field needed)</td></tr>
+    <tr><td><code>sum</code></td><td>Sum of the specified field</td></tr>
+    <tr><td><code>avg</code></td><td>Arithmetic mean</td></tr>
+    <tr><td><code>max</code> / <code>min</code></td><td>Maximum / Minimum</td></tr>
+    <tr><td><code>avg_monthly</code></td><td>Monthly average: <code>SUM / distinct months</code>. Ideal for burn rate.</td></tr>
+  </table>
+
+  <h3>Date tokens in domain</h3>
+  <table>
+    <tr><th>Token</th><th>Replaced by</th></tr>
+    <tr><td><code>{today}</code></td><td>Today's date (<code>YYYY-MM-DD</code>)</td></tr>
+    <tr><td><code>{month_start}</code></td><td>First day of current month</td></tr>
+    <tr><td><code>{year_start}</code></td><td>First day of current year</td></tr>
+    <tr><td><code>{last_30d}</code></td><td>30 days ago</td></tr>
+    <tr><td><code>{last_90d}</code></td><td>90 days ago</td></tr>
+    <tr><td><code>{last_365d}</code></td><td>365 days ago</td></tr>
+  </table>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<!-- GUÍA DE USUARIO — CONFIGURACIÓN -->
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<h2>Guía de configuración</h2>
-<p class="section-intro">Sigue estos tres pasos para conectar claude.ai con tu Odoo. Tiempo estimado: 5 minutos.</p>
+<!-- FORMULA -->
+<div class="section">
+  <h2>Formula KPIs</h2>
+  <p>Combine existing KPIs with arithmetic expressions to calculate ratios, financial runway, margins, etc.</p>
+  <div class="screenshot-wrap">
+    <img src="kpi-formula.png" alt="Formula KPI" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;"/>
+  </div>
+  <p class="caption">Formula KPI — expression references the technical name of other KPIs in curly braces. Example: <code>{balance_57} / {burn_rate}</code> → runway in months.</p>
+  <div class="tip">
+    <strong>💡 Technical names</strong>: Use simple names without spaces: <code>balance_57</code>, <code>burn_rate</code>, <code>monthly_sales</code>. Allowed operators: + − × ÷ and parentheses.
+  </div>
+</div>
 
-<div class="step-row">
-  <span class="step-num">1</span>
-  <div class="step-body">
-    <strong>Instala el módulo y activa la licencia</strong>
-    <ol>
-      <li>Ve a <strong>Aplicaciones</strong> en Odoo, busca <em>IA Agents Treasury Control</em> e instálalo.</li>
-      <li>Una vez instalado, ve a <strong>Ajustes → IA Treasury Control → Licencia SaaS</strong>.</li>
-      <li>Introduce tu clave de licencia (formato <code>XXXX-XXXX-XXXX-XXXX</code>) y pulsa
-          <em>"Validar licencia ahora"</em>.</li>
-      <li>El campo <strong>Estado</strong> debe cambiar a <em>Activa</em>.</li>
-    </ol>
-    <div class="tip" style="margin-top:8px;">
-      Si aún no tienes clave de licencia, contacta con <a href="mailto:info@uniasser.com">info@uniasser.com</a>.
+<!-- ICON SELECTOR -->
+<div class="section">
+  <h2>Icon Selector &amp; Visual Customization</h2>
+  <p>Each KPI can have an emoji or Font Awesome icon, an accent color, and an independent icon size.</p>
+  <div class="screenshot-wrap">
+    <img src="kpi-icon-selector.png" alt="Icon Selector" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;"/>
+  </div>
+  <p class="caption">Visual icon selector with emojis grouped by category. Click on the icon field to open the panel.</p>
+
+  <div class="screenshot-wrap">
+    <img src="kpi-icon-size.png" alt="Icon Size options" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;"/>
+  </div>
+  <p class="caption">Icon size options — Small (~20px), Medium (~32px, default), Large (~52px).</p>
+</div>
+
+<!-- ALERTS -->
+<div class="section">
+  <h2>Alert Rules</h2>
+  <p>Menu → <strong>RT Dashboard → Alert Rules</strong>. Each rule monitors a KPI and triggers notifications when it exceeds (or falls below) a threshold.</p>
+  <div class="screenshot-wrap">
+    <img src="kpi-alert-rules.png" alt="Alert Rules" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;"/>
+  </div>
+  <p class="caption">Alert rule — KPI + level (warning/critical) + channels (Dashboard, WhatsApp, Telegram) + message with <code>{value}</code> token.</p>
+  <table>
+    <tr><th>Channel</th><th>Requirement</th></tr>
+    <tr><td>Dashboard (in-app)</td><td>None. Automatic banner on all open dashboards.</td></tr>
+    <tr><td>WhatsApp</td><td>WhatsApp Business API token + destination phone number.</td></tr>
+    <tr><td>Telegram</td><td>Telegram bot token + <code>chat_id</code> of the recipient.</td></tr>
+  </table>
+</div>
+
+<!-- AI -->
+<div class="section">
+  <h2>Artificial Intelligence (Anthropic Claude)</h2>
+  <div class="screenshot-wrap">
+    <img src="kpi-claude.png" alt="AI features" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;"/>
+  </div>
+  <p class="caption">AI-powered features — daily executive briefing, natural language KPI generator and anomaly detection.</p>
+  <div class="two-col">
+    <div>
+      <h3>📋 Daily Executive Briefing</h3>
+      <p>The daily cron generates a natural language summary with the most relevant KPIs for each department, highlighting anomalies and trends. Stored in <strong>RT Dashboard → AI Briefings</strong>.</p>
+      <div class="tip">
+        Requires an <strong>Anthropic Claude</strong> API key (starts with <code>sk-ant-</code>). Get one at <strong>console.anthropic.com</strong> and set it in <strong>Settings → Technical → System Parameters</strong> under key <code>rt_dashboard.llm_api_key</code>.
+      </div>
+    </div>
+    <div>
+      <h3>🤖 AI KPI Generator</h3>
+      <p>Menu → <strong>Create KPI with AI</strong>. Describe in plain text the KPI you need:</p>
+      <pre>"last month's sales in euros,
+grouped by salesperson,
+confirmed invoices only"</pre>
+      <p>Claude automatically configures model, aggregation, field and domain — ready to review and save.</p>
     </div>
   </div>
+  <h3>🔍 Anomaly Detection</h3>
+  <p>The anomaly engine analyzes the historical series of each KPI and notifies when a value deviates significantly from the historical average. Sensitivity is configurable per KPI.</p>
 </div>
 
-<div class="step-row">
-  <span class="step-num">2</span>
-  <div class="step-body">
-    <strong>Copia los datos de conexión desde Odoo</strong>
-    <p>En <strong>Ajustes → IA Treasury Control → Conectar con claude.ai</strong>
-    verás tres valores generados automáticamente al instalar el módulo:</p>
-    <div class="connector-box">
-      <div class="connector-row">
-        <span class="connector-label">URL del servidor</span>
-        <span class="connector-value">https://tuodoo.com/mcp</span>
-      </div>
-      <div class="connector-row">
-        <span class="connector-label">OAuth Client ID</span>
-        <span class="connector-value">nombre_de_tu_base_de_datos</span>
-      </div>
-      <div class="connector-row">
-        <span class="connector-label">OAuth Client Secret</span>
-        <span class="connector-value">a3f8c2d1e5b7… (generado automáticamente)</span>
-      </div>
-    </div>
-    <p style="margin-top:6px; color:#555; font-size:13px;">
-      No tienes que generar ni configurar nada — el módulo lo hace solo al instalarse.
-    </p>
+<!-- INSTALLATION -->
+<div class="section">
+  <h2>Installation &amp; Update</h2>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">Copy the <code>odoo_rt_dashboard</code> folder into your custom addons directory.</div>
   </div>
-</div>
-
-<div class="step-row">
-  <span class="step-num">3</span>
-  <div class="step-body">
-    <strong>Añade el conector en claude.ai</strong>
-    <ol>
-      <li>Abre <a href="https://claude.ai" target="_blank"><strong>claude.ai</strong></a> y ve a
-          <strong>Settings → Integrations</strong>.</li>
-      <li>Pulsa <strong>"Add custom connector"</strong>.</li>
-      <li>En <em>Name</em> escribe, por ejemplo, <em>Mi Odoo</em>.</li>
-      <li>En <em>Integration URL</em> pega la <strong>URL del servidor</strong> del paso anterior
-          (p. ej. <code>https://tuodoo.com/mcp</code>).</li>
-      <li>Despliega <em>"Advanced settings"</em> e introduce:
-        <ul>
-          <li><strong>OAuth Client ID</strong>: el valor del paso 2</li>
-          <li><strong>OAuth Client Secret</strong>: el valor del paso 2</li>
-        </ul>
-      </li>
-      <li>Pulsa <strong>"Add"</strong>.</li>
-    </ol>
-    <p>Claude se autenticará automáticamente vía OAuth y tendrás acceso a todas las herramientas financieras.</p>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">Restart the Odoo server and go to <strong>Settings → Technical → Update Module List</strong>.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">Install <strong>RT Dashboard</strong> from the apps list.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">The module automatically creates predefined KPIs for 7 departments and one dashboard per department assigned to the administrator.</div>
+  </div>
+  <h3>Update</h3>
+  <pre>./odoo-bin -u odoo_rt_dashboard -d &lt;database&gt; --stop-after-init</pre>
+  <div class="warn">
+    <strong>⚠ After updating with JavaScript changes</strong>: add <code>?debug=assets</code> to the dashboard URL or clear browser cache with <kbd>Ctrl+Shift+R</kbd>.
   </div>
 </div>
 
-<div class="tip">
-  <strong>¿Lo tienes? Prueba ahora:</strong> abre un chat en claude.ai y escribe
-  <em>"¿Cómo está la tesorería esta semana?"</em> — Claude consultará tu Odoo y te responderá
-  con los datos reales de tu empresa en segundos.
+<!-- COMPATIBILITY -->
+<div class="section">
+  <h2>Compatibility</h2>
+  <div class="screenshot-wrap">
+    <img src="compatibility.png" alt="Compatibility" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;"/>
+  </div>
+  <table>
+    <tr><th>Odoo Version</th><th>Community (CE)</th><th>Enterprise</th></tr>
+    <tr><td>Odoo 16</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Odoo 17</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Odoo 18</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Odoo 19</td><td>✅</td><td>✅</td></tr>
+  </table>
+  <div class="tip"><strong>Python dependencies:</strong> <code>anthropic</code> (install with <code>pip install anthropic</code> in the Odoo virtual environment). Required Odoo dependencies: <code>base</code>, <code>web</code>, <code>bus</code>, <code>mail</code>.</div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<!-- QUÉ PUEDES PREGUNTAR -->
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<h2>Qué puedes preguntar a Claude</h2>
-<p class="section-intro">14 herramientas financieras disponibles desde lenguaje natural.</p>
-
-<div class="tool-grid">
-
-  <div class="tool-box">
-    <h3>📊 Tesorería y caja</h3>
-    <p style="font-size:13px; color:#555; margin:0 0 8px;">
-      Informe completo de cobros/pagos pendientes, saldo bancario real y previsión de caja.
-    </p>
-    <div class="example">«¿Cómo está la tesorería esta semana?»</div>
-    <div class="example">«¿Qué cobros y pagos tenemos pendientes este mes?»</div>
-    <div class="example">«Dame la previsión de caja para los próximos 60 días»</div>
-    <div class="example">«¿Cuánto dinero tenemos ahora mismo en el banco?»</div>
-    <div class="example">«Muéstrame el extracto bancario del último mes»</div>
-  </div>
-
-  <div class="tool-box">
-    <h3>🧾 Fiscal e IVA</h3>
-    <p style="font-size:13px; color:#555; margin:0 0 8px;">
-      Estado del IVA, IRPF e Impuesto de Sociedades por trimestre o ejercicio.
-    </p>
-    <div class="example">«¿Cómo está el IVA de este trimestre?»</div>
-    <div class="example">«Dame el estado fiscal del Q1 de 2025»</div>
-    <div class="example">«¿Cuánto IRPF hemos retenido este año?»</div>
-    <div class="example">«Estimación del Impuesto de Sociedades hasta hoy»</div>
-  </div>
-
-  <div class="tool-box">
-    <h3>📄 Facturas y clientes</h3>
-    <p style="font-size:13px; color:#555; margin:0 0 8px;">
-      Crea borradores de facturas, consulta pendientes y visualiza el libro mayor.
-    </p>
-    <div class="example">«Crea una factura a Empresa ABC por 1.500 € de consultoría»</div>
-    <div class="example">«¿Qué facturas tiene pendientes Cliente XYZ?»</div>
-    <div class="example">«Muéstrame el libro mayor de la cuenta 4300»</div>
-    <div class="example">«Procesa las facturas de proveedor del correo de hoy»</div>
-  </div>
-
-  <div class="tool-box">
-    <h3>🏦 Conciliación bancaria</h3>
-    <p style="font-size:13px; color:#555; margin:0 0 8px;">
-      Propone y aplica matches entre movimientos bancarios y facturas (opcional: Nordigen/Plaid).
-    </p>
-    <div class="example">«Concilia los movimientos bancarios de los últimos 15 días»</div>
-    <div class="example">«Muéstrame las propuestas de conciliación pendientes»</div>
-    <div class="example">«Aprueba los matches 1, 3 y 5»</div>
-  </div>
-
-  <div class="tool-box">
-    <h3>⏱️ Partes de horas</h3>
-    <p style="font-size:13px; color:#555; margin:0 0 8px;">
-      Registra horas, crea proyectos y tareas en Odoo desde el chat.
-    </p>
-    <div class="example">«Registra 3h de diseño en el proyecto Cliente XYZ para ana@empresa.com»</div>
-    <div class="example">«Crea el proyecto "Web 2025" para el cliente García S.L.»</div>
-    <div class="example">«Añade una tarea "Revisión propuesta" al proyecto Interno»</div>
-    <div class="example">«Apunta 2h de reunión en el proyecto Interno para hoy»</div>
-  </div>
-
-  <div class="tool-box">
-    <h3>🔔 Alertas y resumen diario</h3>
-    <p style="font-size:13px; color:#555; margin:0 0 8px;">
-      Detecta facturas vencidas, caja negativa y vencimientos fiscales próximos.
-    </p>
-    <div class="example">«¿Hay alguna alerta financiera importante hoy?»</div>
-    <div class="example">«¿Tenemos facturas vencidas o vencimientos fiscales próximos?»</div>
-    <div class="example">«Dame el resumen financiero del día»</div>
-  </div>
-
-</div>
-
-<div class="info">
-  <strong>Importante:</strong> Claude <strong>nunca confirma ni envía</strong> facturas o pagos
-  de forma automática. Todo queda en <strong>borrador en Odoo</strong> para que tú lo revises y confirmes.
-</div>
-
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<!-- HERRAMIENTAS MCP — TABLA TÉCNICA -->
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<h2>Herramientas MCP disponibles</h2>
-
-<table>
-  <tr>
-    <th>Herramienta</th>
-    <th>Descripción</th>
-    <th>Área</th>
-  </tr>
-  <tr><td><span class="tool-name">get_treasury_report</span></td>
-      <td>Cobros/pagos pendientes y previsión de caja configurable</td>
-      <td>Tesorería</td></tr>
-  <tr><td><span class="tool-name">get_bank_account_balances</span></td>
-      <td>Saldos de todas las cuentas bancarias (grupo 572)</td>
-      <td>Tesorería</td></tr>
-  <tr><td><span class="tool-name">get_bank_account_statement</span></td>
-      <td>Extracto bancario con saldo arrastrado por período</td>
-      <td>Tesorería</td></tr>
-  <tr><td><span class="tool-name">get_tax_status</span></td>
-      <td>IVA, IRPF y estimación IS por trimestre o ejercicio</td>
-      <td>Fiscal</td></tr>
-  <tr><td><span class="tool-name">create_draft_invoice</span></td>
-      <td>Crea factura de cliente en borrador desde texto libre</td>
-      <td>Facturación</td></tr>
-  <tr><td><span class="tool-name">process_email_invoices</span></td>
-      <td>OCR de PDFs del buzón IMAP → borrador factura proveedor</td>
-      <td>Facturación</td></tr>
-  <tr><td><span class="tool-name">get_customer_pending_invoices</span></td>
-      <td>Facturas pendientes de cobro de un cliente concreto</td>
-      <td>Facturación</td></tr>
-  <tr><td><span class="tool-name">get_account_ledger</span></td>
-      <td>Libro mayor de cualquier cuenta contable</td>
-      <td>Contabilidad</td></tr>
-  <tr><td><span class="tool-name">run_bank_reconciliation</span></td>
-      <td>Propone matches movimientos bancarios ↔ facturas</td>
-      <td>Conciliación</td></tr>
-  <tr><td><span class="tool-name">apply_reconciliation</span></td>
-      <td>Crea pagos borrador para los matches aprobados</td>
-      <td>Conciliación</td></tr>
-  <tr><td><span class="tool-name">get_alerts</span></td>
-      <td>Alertas: vencidos, plazos fiscales, caja negativa</td>
-      <td>Alertas</td></tr>
-  <tr><td><span class="tool-name">create_timesheet_entry</span></td>
-      <td>Registra parte de horas (proyecto / tarea / usuario / horas)</td>
-      <td>Timesheets</td></tr>
-  <tr><td><span class="tool-name">create_timesheet_project</span></td>
-      <td>Crea un proyecto en Odoo</td>
-      <td>Timesheets</td></tr>
-  <tr><td><span class="tool-name">create_timesheet_task</span></td>
-      <td>Crea una tarea dentro de un proyecto existente</td>
-      <td>Timesheets</td></tr>
-  <tr><td><span class="tool-name">health_check</span></td>
-      <td>Comprueba la conexión y estado del módulo en Odoo</td>
-      <td>Sistema</td></tr>
-</table>
-
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<!-- PREGUNTAS FRECUENTES -->
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<h2>Preguntas frecuentes</h2>
-
-<table>
-  <tr><th style="width:38%">Pregunta</th><th>Respuesta</th></tr>
-  <tr>
-    <td>¿Necesito configurar algo en el servidor?</td>
-    <td><strong>Casi nada.</strong> El módulo se autoconfigura al instalarse. Solo tienes que
-        copiar los datos de Ajustes y pegarlos en claude.ai. Si usas nginx como proxy inverso,
-        añade <code>proxy_buffering off</code> para la ruta <code>/mcp</code>
-        (ver sección "Administradores de sistema" más abajo).</td>
-  </tr>
-  <tr>
-    <td>¿Claude confirma facturas o pagos automáticamente?</td>
-    <td><strong>No.</strong> Todo queda en borrador en Odoo. Siempre eres tú quien confirma.</td>
-  </tr>
-  <tr>
-    <td>¿Necesito una cuenta de Anthropic o API Key?</td>
-    <td>No. El módulo funciona con tu cuenta de <strong>claude.ai</strong> habitual
-        (plan Pro o Team). No necesitas API Key ni pagar nada adicional a Anthropic.</td>
-  </tr>
-  <tr>
-    <td>¿Funciona desde el móvil?</td>
-    <td>Sí. La app oficial de Claude (iOS y Android) también soporta conectores MCP
-        con autenticación OAuth.</td>
-  </tr>
-  <tr>
-    <td>¿Qué pasa si regenero el token?</td>
-    <td>Tendrás que actualizar el <em>OAuth Client Secret</em> en claude.ai con el nuevo valor.
-        El botón <em>"Regenerar token"</em> en Ajustes te genera uno nuevo en un clic.</td>
-  </tr>
-  <tr>
-    <td>¿La conciliación bancaria es obligatoria?</td>
-    <td>No. Es completamente opcional. El resto de herramientas (tesorería, fiscal, facturas,
-        timesheets) funcionan sin configurar Nordigen ni Plaid.</td>
-  </tr>
-  <tr>
-    <td>¿Funciona también desde WhatsApp?</td>
-    <td>Sí, configurando n8n para reenviar los mensajes al endpoint
-        <code>/webhook/whatsapp</code>. Contacta con <a href="mailto:info@uniasser.com">info@uniasser.com</a>
-        para la guía de configuración.</td>
-  </tr>
-  <tr>
-    <td>¿Funciona con Odoo Community (CE)?</td>
-    <td>Sí. El módulo es compatible con las versiones Community y Enterprise de Odoo 16, 17, 18 y 19.</td>
-  </tr>
-  <tr>
-    <td>¿Cómo se renueva la licencia?</td>
-    <td>La licencia SaaS se renueva automáticamente cada mes. Recibirás un aviso por email
-        antes del vencimiento. Si la licencia caduca, el módulo entra en modo suspendido
-        hasta que se renueve.</td>
-  </tr>
-</table>
-
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<!-- CONFIGURACIÓN AVANZADA — ADMIN DE SISTEMA -->
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<details>
-  <summary>⚙️ Configuración avanzada — para administradores de sistema</summary>
-  <div class="details-body">
-
-    <h3>Requisito: nginx con SSE habilitado</h3>
-    <p>
-      Si Odoo está detrás de un proxy inverso nginx (instalación habitual),
-      el endpoint <code>/mcp</code> necesita que el proxy <strong>no almacene en búfer</strong>
-      la respuesta para soportar Server-Sent Events (SSE). Sin esto claude.ai no puede
-      recibir la respuesta del servidor.
-    </p>
-    <p>Añade este bloque en la configuración nginx de tu dominio Odoo,
-       <strong>antes</strong> del <code>location /</code> genérico:</p>
-
-    <pre>location = /.well-known/oauth-protected-resource {
-    proxy_pass http://127.0.0.1:8069/.well-known/oauth-protected-resource;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-}
-
-location /mcp {
-    proxy_pass http://127.0.0.1:8069/mcp;
-    proxy_http_version 1.1;
-    proxy_buffering off;
-    proxy_cache off;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_set_header Connection '';
-    proxy_read_timeout 300s;
-}</pre>
-
-    <p>Recarga nginx tras el cambio:</p>
-    <pre>sudo nginx -t &amp;&amp; sudo systemctl reload nginx</pre>
-
-    <h3>proxy_mode en odoo.conf</h3>
-    <p>Si usas nginx como proxy inverso, asegúrate de que tu <code>odoo.conf</code> incluye:</p>
-    <pre>proxy_mode = True</pre>
-    <p>Esto permite a Odoo leer correctamente las cabeceras <code>X-Forwarded-*</code>.</p>
-
-    <h3>server_wide_modules</h3>
-    <p>El módulo debe cargarse como server-wide para responder a rutas OAuth antes de
-       que Odoo resuelva la base de datos. En <code>odoo.conf</code>:</p>
-    <pre>server_wide_modules = base,web,ia_agents_treasury_control</pre>
-
-    <h3>dbfilter recomendado</h3>
-    <p>Si tu Odoo gestiona varias bases de datos, añade en <code>odoo.conf</code>:</p>
-    <pre>dbfilter = ^nombre_de_tu_bd$</pre>
-    <p>Garantiza que Odoo siempre resuelve la base de datos correcta en las peticiones MCP.</p>
-
-    <h3>Dependencias Python</h3>
-    <p>El módulo requiere los siguientes paquetes en el entorno Python de Odoo:</p>
-    <pre>pip install anthropic structlog httpx PyJWT cryptography rapidfuzz</pre>
-
-    <h3>Endpoints del módulo</h3>
-    <table>
-      <tr><th>Ruta</th><th>Método</th><th>Descripción</th></tr>
-      <tr><td><code>/mcp</code></td><td>GET / POST</td><td>Protocolo MCP — herramientas financieras</td></tr>
-      <tr><td><code>/.well-known/oauth-protected-resource</code></td><td>GET</td><td>Descubrimiento OAuth (RFC 9728)</td></tr>
-      <tr><td><code>/.well-known/oauth-authorization-server</code></td><td>GET</td><td>Metadatos del servidor OAuth</td></tr>
-      <tr><td><code>/mcp/oauth/authorize</code></td><td>GET</td><td>Authorization Code + PKCE</td></tr>
-      <tr><td><code>/mcp/oauth/token</code></td><td>POST</td><td>Intercambio de código por token</td></tr>
-      <tr><td><code>/oauth/register</code></td><td>POST</td><td>Registro dinámico de cliente OAuth</td></tr>
-      <tr><td><code>/webhook/whatsapp</code></td><td>POST</td><td>Webhook WhatsApp vía n8n</td></tr>
-    </table>
-
-    <h3>Verificar que el módulo está activo</h3>
-    <pre># En el servidor, comprueba que el proceso Odoo tiene el módulo cargado:
-curl -s https://tuodoo.com/.well-known/oauth-protected-resource | python3 -m json.tool</pre>
-    <p>Si ves un JSON con <code>"resource"</code> y <code>"authorization_servers"</code>, el módulo está activo.</p>
-
-  </div>
-</details>
-
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<!-- COMPATIBILIDAD -->
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<h2>Compatibilidad</h2>
-
-<table>
-  <tr><th>Versión Odoo</th><th>Community (CE)</th><th>Enterprise</th></tr>
-  <tr><td>Odoo 16</td><td>✅</td><td>✅</td></tr>
-  <tr><td>Odoo 17</td><td>✅</td><td>✅</td></tr>
-  <tr><td>Odoo 18</td><td>✅</td><td>✅</td></tr>
-  <tr><td>Odoo 19</td><td>✅</td><td>✅</td></tr>
-</table>
-
-<div class="req-list">
-  <strong>Requisitos mínimos:</strong>
-  <ul style="margin:8px 0 0; padding-left:20px;">
-    <li>Python 3.10 o superior</li>
-    <li>Módulos Odoo base: <code>account</code>, <code>project</code>, <code>hr_timesheet</code>, <code>mail</code></li>
-    <li>Paquetes Python: <code>anthropic</code>, <code>structlog</code>, <code>httpx</code>,
-        <code>PyJWT</code>, <code>cryptography</code>, <code>rapidfuzz</code></li>
-    <li>Suscripción SaaS activa (clave de licencia)</li>
+<!-- FAQ -->
+<div class="section">
+  <h2>Frequently Asked Questions</h2>
+  <h3>Why does a KPI show 0?</h3>
+  <ul>
+    <li>The technical name of a referenced KPI does not match exactly the <code>{name}</code> token in the formula.</li>
+    <li>The domain filters too much — try <code>[]</code> to check if there is data.</li>
+    <li>The chosen field is computed and not SQL-aggregable. Use <strong>Compute Now</strong> and check server logs.</li>
+    <li>The field does not exist in the model. Use the <strong>Field Selector</strong> to confirm.</li>
   </ul>
+  <h3>How do I move a KPI to another department?</h3>
+  <p>Edit the KPI and change the <strong>Department</strong> field. The module automatically removes it from the previous dashboard and adds it to the new one.</p>
+  <h3>The LIVE indicator disappears?</h3>
+  <p>The bus.bus connection is lost if the Odoo server restarts. Reload the page to reconnect.</p>
+  <h3>What API key do I need for AI?</h3>
+  <p>The module uses <strong>Anthropic Claude</strong>. Get your key at <a href="https://console.anthropic.com" style="color:#1a2980">console.anthropic.com</a>. The key starts with <code>sk-ant-</code>.</p>
+  <h3>How do I configure WhatsApp alerts?</h3>
+  <p>You need a <strong>WhatsApp Business API</strong> account (Meta). Enter the token in the alert rule along with the destination phone number in international format (<code>+34600123456</code>).</p>
+  <h3>How do I configure Telegram alerts?</h3>
+  <p>Create a bot with <strong>@BotFather</strong> on Telegram and get the token. The <code>chat_id</code> is the numeric ID of the chat or group to receive the message.</p>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<!-- SOPORTE -->
-<!-- ══════════════════════════════════════════════════════════════════════ -->
-<h2>Soporte y contacto</h2>
-
-<table style="max-width:520px;">
-  <tr>
-    <td style="font-weight:600; width:160px;">Email de soporte</td>
-    <td><a href="mailto:info@uniasser.com">info@uniasser.com</a></td>
-  </tr>
-  <tr>
-    <td style="font-weight:600;">Web</td>
-    <td><a href="https://www.uniasser.com" target="_blank">www.uniasser.com</a></td>
-  </tr>
-  <tr>
-    <td style="font-weight:600;">Vendedor</td>
-    <td>Uniasser Consulting S.L.</td>
-  </tr>
-  <tr>
-    <td style="font-weight:600;">Licencia</td>
-    <td>OPL-1 — Odoo Proprietary License v1 (suscripción SaaS)</td>
-  </tr>
-</table>
-
-<p style="color:#888; font-size:12px; margin-top:32px; border-top:1px solid #eee; padding-top:10px;">
-  © 2024-2026 Uniasser Consulting S.L. — Todos los derechos reservados.<br/>
-  Queda expresamente prohibida la copia, redistribución o ingeniería inversa sin autorización escrita.
-</p>
+<!-- FOOTER -->
+<div class="section" style="background:#f8f9fc">
+  <h2>Support &amp; Contact</h2>
+  <table>
+    <tr><th>Field</th><th>Value</th></tr>
+    <tr><td>Vendor</td><td><strong>Uniasser Consulting S.L.</strong></td></tr>
+    <tr><td>Support email</td><td><a href="mailto:info@uniasser.com" style="color:#1a2980">info@uniasser.com</a></td></tr>
+    <tr><td>Website</td><td><a href="https://www.uniasser.com" style="color:#1a2980">www.uniasser.com</a></td></tr>
+    <tr><td>License</td><td>OPL-1 (Odoo Proprietary License)</td></tr>
+    <tr><td>Compatibility</td><td>Odoo 16, 17, 18, 19 — Community &amp; Enterprise</td></tr>
+  </table>
+</div>
 
 </body>
 </html>
