@@ -31,11 +31,17 @@
                     <!-- Odoo connection for remote agents -->
                     <block title="Odoo Connection (for remote agents)">
                         <setting string="Odoo API Key"
-                                 help="API key so the Uniasser server can read/write your Odoo. Generate it at: Settings → Users → your user → API Keys → New Key.">
+                                 help="API key so the Uniasser server can read/write your Odoo.">
                             <field name="iatc_odoo_api_key" password="True"/>
+                            <button name="action_generate_odoo_api_key" type="object"
+                                    string="Generate API Key automatically" class="btn-primary mt8"/>
+                            <div class="text-muted mt4">
+                                Click the button to generate and save the key automatically,
+                                or create one manually at Settings → Users → your user → API Keys.
+                            </div>
                         </setting>
                         <setting string="Odoo user (login)"
-                                 help="Login of the user whose API Key you generated. Usually 'admin'. On Odoo.sh use the user's email address.">
+                                 help="Login of the user whose API Key was generated. Filled automatically when using the button above.">
                             <field name="iatc_odoo_login"/>
                         </setting>
                     </block>
