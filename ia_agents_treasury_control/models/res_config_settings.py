@@ -163,3 +163,45 @@ class ResConfigSettings(models.TransientModel):
                 "sticky": False,
             },
         }
+
+    def action_generate_odoo_api_key(self):
+        """Genera automáticamente una Odoo API Key para el usuario actual y la guarda."""
+        try:
+            user = self.env.user
+            # Eliminar clave anterior del módulo si existe
+            existing_name = "IA Treasury Control MCP"
+            self.env["res.users.apikeys"].sudo().search([
+                ("user_id", "=", user.id),
+                ("name", "=", existing_name),
+            ]).unlink()
+            # Generar nueva clave (sin sudo: _generate crea la clave para self.env.uid)
+            key = self.env["res.users.apikeys"]._generate(
+                scope="rpc",
+                name=existing_name,
+                expiration_date=False,
+            )
+            # Guardar en config
+            icp = self.env["ir.config_parameter"].sudo()
+            icp.set_param(f"{_P}odoo_api_key", key)
+            icp.set_param(f"{_P}odoo_login", user.login)
+            return {
+                "type": "ir.actions.client",
+                "tag": "display_notification",
+                "params": {
+                    "title": "API Key generated",
+                    "message": f"Odoo API Key generated for user '{user.login}' and saved automatically.",
+                    "type": "success",
+                    "sticky": False,
+                },
+            }
+        except Exception as exc:
+            return {
+                "type": "ir.actions.client",
+                "tag": "display_notification",
+                "params": {
+                    "title": "Error generating API Key",
+                    "message": str(exc),
+                    "type": "danger",
+                    "sticky": True,
+                },
+            }
