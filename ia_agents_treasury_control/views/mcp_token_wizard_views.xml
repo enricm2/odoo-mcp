@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_iatc_mcp_token_wizard_form" model="ir.ui.view">
+        <field name="name">iatc.mcp_token_wizard.form</field>
+        <field name="model">iatc.mcp_token_wizard</field>
+        <field name="arch" type="xml">
+            <form string="MCP Token (OAuth Client Secret)">
+                <sheet>
+                    <group>
+                        <field name="token" widget="text" nolabel="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Cerrar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
