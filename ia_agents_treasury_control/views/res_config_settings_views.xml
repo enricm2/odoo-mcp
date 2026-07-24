@@ -3,80 +3,246 @@
     <record id="res_config_settings_view_form_iatc" model="ir.ui.view">
         <field name="name">res.config.settings.view.form.iatc</field>
         <field name="model">res.config.settings</field>
-        <field name="priority">100</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//form" position="inside">
-                <app string="IA Treasury Control" name="ia_agents_treasury_control" groups="base.group_system">
+                <div class="app_settings_block"
+                     data-string="IA Treasury Control"
+                     string="IA Treasury Control"
+                     data-key="ia_agents_treasury_control"
+                     groups="base.group_system">
+
+                    <h2>IA Treasury Control</h2>
 
                     <!-- License -->
-                    <block title="SaaS License">
-                        <setting string="License key">
-                            <field name="iatc_license_key" password="True"/>
-                            <div class="text-muted">
-                                Format: XXXX-XXXX-XXXX-XXXX · Get your license at
-                                <a href="https://apps.uniasser.net" target="_blank">apps.uniasser.net</a>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">License key</span>
+                                <div class="text-muted">
+                                    Format: XXXX-XXXX-XXXX-XXXX ·
+                                    <a href="https://apps.uniasser.net" target="_blank">apps.uniasser.net</a>
+                                </div>
+                                <div class="content-group mt8">
+                                    <field name="iatc_license_key" password="True"/>
+                                    <button name="action_view_license_key" type="object"
+                                            string="👁 View" class="btn btn-link btn-sm mt4"/>
+                                </div>
                             </div>
-                        </setting>
-                        <setting string="License status">
-                            <field name="iatc_license_status" readonly="1"/>
-                            <field name="iatc_license_customer" readonly="1"
-                                   invisible="iatc_license_customer == ''"/>
-                            <field name="iatc_license_expires" readonly="1"
-                                   invisible="iatc_license_expires == ''"/>
-                            <button name="action_validate_license" type="object"
-                                    string="Validate license" class="btn-secondary mt8"/>
-                        </setting>
-                    </block>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">License status</span>
+                                <div class="content-group mt8">
+                                    <field name="iatc_license_status" readonly="1"/>
+                                    <field name="iatc_license_customer" readonly="1"
+                                           invisible="iatc_license_customer == ''"/>
+                                    <field name="iatc_license_expires" readonly="1"
+                                           invisible="iatc_license_expires == ''"/>
+                                    <button name="action_validate_license" type="object"
+                                            string="Validate license" class="btn btn-secondary mt8"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    <!-- Odoo connection for remote agents -->
-                    <block title="Odoo Connection (for remote agents)">
-                        <setting string="Odoo API Key"
-                                 help="API key so the Uniasser server can read/write your Odoo.">
-                            <field name="iatc_odoo_api_key" password="True"/>
-                            <button name="action_generate_odoo_api_key" type="object"
-                                    string="Generate API Key automatically" class="btn-primary mt8"/>
-                            <div class="text-muted mt4">
-                                Click the button to generate and save the key automatically,
-                                or create one manually at Settings → Users → your user → API Keys.
+                    <!-- Odoo Connection -->
+                    <h2>Odoo Connection (for remote agents)</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Odoo API Key</span>
+                                <div class="text-muted">
+                                    Click the button to generate and save automatically.
+                                </div>
+                                <div class="content-group mt8">
+                                    <field name="iatc_odoo_api_key" password="True"/>
+                                    <button name="action_generate_odoo_api_key" type="object"
+                                            string="Generate API Key" class="btn btn-primary mt8"/>
+                                    <button name="action_view_odoo_api_key" type="object"
+                                            string="👁 View" class="btn btn-link btn-sm mt4"/>
+                                </div>
                             </div>
-                        </setting>
-                        <setting string="Odoo user (login)"
-                                 help="Login of the user whose API Key was generated. Filled automatically when using the button above.">
-                            <field name="iatc_odoo_login"/>
-                        </setting>
-                    </block>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Odoo user (login)</span>
+                                <div class="text-muted">
+                                    Filled automatically when using the button above.
+                                </div>
+                                <div class="content-group mt8">
+                                    <field name="iatc_odoo_login"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- MCP Server -->
-                    <block title="MCP Server (Claude.ai)">
-                        <setting string="MCP Token (OAuth Client Secret)"
-                                 help="Paste this value in 'OAuth Client Secret' when adding the MCP server in claude.ai.">
-                            <field name="iatc_mcp_secret_token" password="True"/>
-                            <button name="action_generate_mcp_token" type="object"
-                                    string="Regenerate token" class="btn-secondary mt8"/>
-                        </setting>
-                        <setting string="MCP Server URL">
-                            <field name="iatc_mcp_endpoint_url" readonly="1"/>
-                            <div class="text-muted">
-                                Use this URL when configuring the MCP server in claude.ai.
+                    <h2>MCP Server</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">MCP Database</span>
+                                <div class="text-muted">
+                                    Select the database to use for MCP OAuth. Required for OAuth endpoints.
+                                </div>
+                                <div class="content-group mt8">
+                                    <field name="iatc_mcp_database"/>
+                                </div>
                             </div>
-                        </setting>
-                        <setting string="OAuth Client ID">
-                            <field name="iatc_mcp_oauth_client_id" readonly="1"/>
-                        </setting>
-                    </block>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">MCP Token (OAuth Client Secret)</span>
+                                <div class="text-muted">
+                                    Paste in 'OAuth Client Secret' when adding the MCP server in claude.ai.
+                                </div>
+                                <div class="content-group mt8">
+                                    <field name="iatc_mcp_secret_token" widget="text"/>
+                                    <button name="action_generate_mcp_token" type="object"
+                                            string="Regenerate token" class="btn btn-secondary mt8"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">MCP Server URL</span>
+                                <div class="text-muted">Use this URL when configuring the MCP server.</div>
+                                <div class="content-group mt8">
+                                    <field name="iatc_mcp_endpoint_url" readonly="1"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">OAuth Client ID</span>
+                                <div class="content-group mt8">
+                                    <field name="iatc_mcp_oauth_client_id" readonly="1"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    <!-- AI -->
-                    <block title="Artificial Intelligence (Anthropic Claude)">
-                        <setting string="Anthropic API Key"
-                                 help="Your Anthropic API key for AI-generated reports and invoice OCR. Get it at console.anthropic.com. Optional: without this key the module returns structured data tables instead of narrative reports.">
-                            <field name="iatc_anthropic_api_key" password="True"/>
-                        </setting>
-                        <setting string="Claude model">
-                            <field name="iatc_claude_model"/>
-                        </setting>
-                    </block>
+                    <!-- AI Provider -->
+                    <h2>Artificial Intelligence</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Active AI provider</span>
+                                <div class="content-group mt8">
+                                    <field name="iatc_llm_provider"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Anthropic API Key (Claude)</span>
+                                <div class="content-group mt8">
+                                    <field name="iatc_anthropic_api_key" password="True"/>
+                                    <button name="action_view_anthropic_api_key" type="object"
+                                            string="👁 View" class="btn btn-link btn-sm"/>
+                                    <field name="iatc_claude_model"
+                                           invisible="iatc_llm_provider != 'claude'"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Gemini API Key (Google)</span>
+                                <div class="content-group mt8">
+                                    <field name="iatc_gemini_api_key" password="True"/>
+                                    <button name="action_view_gemini_api_key" type="object"
+                                            string="👁 View" class="btn btn-link btn-sm"/>
+                                    <field name="iatc_gemini_model"
+                                           invisible="iatc_llm_provider != 'gemini'"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">OpenAI API Key (ChatGPT)</span>
+                                <div class="content-group mt8">
+                                    <field name="iatc_openai_api_key" password="True"/>
+                                    <button name="action_view_openai_api_key" type="object"
+                                            string="👁 View" class="btn btn-link btn-sm"/>
+                                    <field name="iatc_openai_model"
+                                           invisible="iatc_llm_provider != 'openai'"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Grok API Key (xAI)</span>
+                                <div class="content-group mt8">
+                                    <field name="iatc_grok_api_key" password="True"/>
+                                    <button name="action_view_grok_api_key" type="object"
+                                            string="👁 View" class="btn btn-link btn-sm"/>
+                                    <field name="iatc_grok_model"
+                                           invisible="iatc_llm_provider != 'grok'"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                </app>
+                    <!-- WhatsApp -->
+                    <h2>WhatsApp (Twilio)</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Twilio Account SID</span>
+                                <div class="content-group mt8">
+                                    <field name="iatc_twilio_account_sid" password="True"/>
+                                    <button name="action_view_twilio_account_sid" type="object"
+                                            string="👁 View" class="btn btn-link btn-sm mt4"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Twilio Auth Token</span>
+                                <div class="content-group mt8">
+                                    <field name="iatc_twilio_auth_token" password="True"/>
+                                    <button name="action_view_twilio_auth_token" type="object"
+                                            string="👁 View" class="btn btn-link btn-sm mt4"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Twilio WhatsApp number</span>
+                                <div class="content-group mt8">
+                                    <field name="iatc_twilio_whatsapp_from"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Webhook URL for Twilio</span>
+                                <div class="content-group mt8">
+                                    <field name="iatc_whatsapp_webhook_url" readonly="1"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </xpath>
         </field>
     </record>
