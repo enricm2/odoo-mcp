@@ -1,6 +1,6 @@
 {
     "name": "IA Treasury Control (MCP)",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.7.8",
     "summary": "AI agent for treasury, tax, invoices and timesheets via Claude MCP",
     "description": """
 Connect your Odoo to Claude.ai and manage treasury, taxes, invoices and
@@ -24,5 +24,6 @@ Requires a SaaS license: https://apps.uniasser.net
     "application": True,
     "installable": True,
     "auto_install": False,
+    "uninstall_hook": "uninstall_hook",
     "support": "soporte@uniasser.com",
 }

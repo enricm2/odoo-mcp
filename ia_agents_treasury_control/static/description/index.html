@@ -4,10 +4,11 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <style>
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #333; max-width: 960px; margin: 0 auto; padding: 20px; }
   h1 { color: #1a1a2e; font-size: 2rem; border-bottom: 3px solid #6c63ff; padding-bottom: 12px; }
-  h2 { color: #1a1a2e; margin-top: 2rem; }
-  h3 { color: #444; }
+  h2 { color: #1a1a2e; margin-top: 2.5rem; font-size: 1.5rem; }
+  h3 { color: #444; font-size: 1.15rem; }
+  h4 { color: #555; margin-bottom: 6px; }
   .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px; }
   .hero h1 { color: white; border-color: #6c63ff; }
   .hero p { font-size: 1.1rem; opacity: 0.9; }
@@ -17,17 +18,37 @@
   .feature-card h3 { margin-top: 0; color: #6c63ff; }
   .step { background: #f8f9fa; border-left: 4px solid #6c63ff; padding: 15px 20px; margin: 10px 0; border-radius: 0 8px 8px 0; }
   .step strong { color: #6c63ff; }
+  .step-num { display: inline-block; background: #6c63ff; color: white; width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px; font-weight: bold; font-size: 0.9rem; margin-right: 8px; }
   table { width: 100%; border-collapse: collapse; margin: 15px 0; }
   th { background: #1a1a2e; color: white; padding: 10px 14px; text-align: left; }
   td { padding: 9px 14px; border-bottom: 1px solid #eee; }
   tr:hover td { background: #f5f5f5; }
-  code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
-  .highlight { background: #fff3cd; border: 1px solid #ffc107; padding: 12px 16px; border-radius: 6px; margin: 10px 0; }
-  .info { background: #d1ecf1; border: 1px solid #17a2b8; padding: 12px 16px; border-radius: 6px; margin: 10px 0; }
+  code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; font-family: monospace; }
+  pre { background: #1a1a2e; color: #e0e0e0; padding: 16px 20px; border-radius: 8px; overflow-x: auto; font-size: 0.88em; line-height: 1.6; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .highlight { background: #fff8e1; border: 1px solid #ffc107; padding: 12px 16px; border-radius: 6px; margin: 10px 0; }
+  .info { background: #e3f2fd; border: 1px solid #2196f3; padding: 12px 16px; border-radius: 6px; margin: 10px 0; }
+  .warning { background: #fce4ec; border: 1px solid #e91e63; padding: 12px 16px; border-radius: 6px; margin: 10px 0; }
+  .success { background: #e8f5e9; border: 1px solid #4caf50; padding: 12px 16px; border-radius: 6px; margin: 10px 0; }
+  .lang-section { border: 2px solid #e0e0e0; border-radius: 10px; margin: 30px 0; overflow: hidden; }
+  .lang-header { padding: 14px 24px; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+  .lang-header.en { background: #e8eaf6; color: #283593; }
+  .lang-header.es { background: #fce4ec; color: #880e4f; }
+  .lang-body { padding: 24px; }
+  hr { border: none; border-top: 2px solid #eee; margin: 40px 0; }
+  .divider { text-align: center; margin: 40px 0; font-size: 1.3rem; color: #aaa; }
+  ul li, ol li { margin-bottom: 6px; }
+  .platform-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .platform-card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 16px; }
+  .platform-card h4 { margin-top: 0; color: #6c63ff; }
+  a { color: #6c63ff; }
 </style>
 </head>
 <body>
 
+<!-- ═══════════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════════ -->
 <div class="hero">
   <h1>IA Treasury Control — MCP</h1>
   <p>Manage your company's treasury, taxes, invoices and timesheets by talking to <strong>Claude.ai</strong> in plain language. Your Odoo data, accessible through AI.</p>
@@ -42,6 +63,9 @@
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════
+     WHAT IS IT
+═══════════════════════════════════════════════════════ -->
 <h2>What is it?</h2>
 <p>
   <strong>IA Treasury Control</strong> installs a lightweight MCP (Model Context Protocol) server inside your Odoo instance.
@@ -53,6 +77,9 @@
   servers using your Anthropic API key — your key, your tokens, your control.
 </div>
 
+<!-- ═══════════════════════════════════════════════════════
+     KEY FEATURES
+═══════════════════════════════════════════════════════ -->
 <h2>Key Features</h2>
 <div class="feature-grid">
   <div class="feature-card">
@@ -81,10 +108,14 @@
   </div>
 </div>
 
-<h2>Available MCP Tools</h2>
+<!-- ═══════════════════════════════════════════════════════
+     TOOLS TABLE
+═══════════════════════════════════════════════════════ -->
+<h2>Available MCP Tools (16 tools)</h2>
 <table>
   <tr><th>Tool</th><th>Description</th></tr>
   <tr><td><code>get_treasury_report</code></td><td>Receivables, payables and cash flow forecast</td></tr>
+  <tr><td><code>get_treasury_forecast</code></td><td>30/60/90-day cash flow projection</td></tr>
   <tr><td><code>get_tax_status</code></td><td>VAT and IRPF status by quarter</td></tr>
   <tr><td><code>create_draft_invoice</code></td><td>Create a draft invoice from natural language</td></tr>
   <tr><td><code>run_bank_reconciliation</code></td><td>Propose bank–invoice matches</td></tr>
@@ -96,51 +127,16 @@
   <tr><td><code>get_alerts</code></td><td>Overdue invoices, tax deadlines, cash warnings</td></tr>
   <tr><td><code>get_account_ledger</code></td><td>Debit/credit movements for any account</td></tr>
   <tr><td><code>get_customer_pending_invoices</code></td><td>Unpaid invoices for a partner</td></tr>
-  <tr><td><code>get_bank_account_balances</code></td><td>All bank account balances (group 572)</td></tr>
+  <tr><td><code>get_bank_account_balances</code></td><td>All bank account balances</td></tr>
   <tr><td><code>get_bank_account_statement</code></td><td>Bank statement with running balance</td></tr>
   <tr><td><code>health_check</code></td><td>Verify MCP server and Odoo connection</td></tr>
 </table>
 
-<h2>Quick Setup — 5 Steps</h2>
-
-<div class="step">
-  <strong>Step 1 — Install the module</strong><br/>
-  Upload the ZIP for your Odoo version and install it from Settings → Apps.
-</div>
-<div class="step">
-  <strong>Step 2 — Enter your license key</strong><br/>
-  Settings → IA Treasury Control → License. Enter your key (format: <code>XXXX-XXXX-XXXX-XXXX</code>).
-  Get a license at <a href="https://apps.uniasser.net">apps.uniasser.net</a>.
-</div>
-<div class="step">
-  <strong>Step 3 — Generate an Odoo API Key</strong><br/>
-  Settings → Users → your user → API Keys → New Key. Paste it in Settings → IA Treasury Control → Odoo API Key.
-</div>
-<div class="step">
-  <strong>Step 4 — Add your Anthropic API Key</strong><br/>
-  Get a key at <a href="https://console.anthropic.com">console.anthropic.com</a> and enter it in Settings → IA Treasury Control → Anthropic API Key.
-  This is your key — you control usage and costs.
-</div>
-<div class="step">
-  <strong>Step 5 — Connect to Claude.ai</strong><br/>
-  Settings → IA Treasury Control → MCP Server. Copy the <strong>MCP Server URL</strong> and <strong>Token</strong>.
-  In claude.ai → Settings → Integrations → Add MCP Server.
-</div>
-
-<h2>Example Conversations</h2>
-<div class="highlight">
-  <em>"Show me the treasury report for this month"</em><br/>
-  <em>"How much VAT do I owe this quarter?"</em><br/>
-  <em>"Create a draft invoice for Acme Corp, €1,200 for consulting services"</em><br/>
-  <em>"Are there any bank movements I haven't matched yet?"</em><br/>
-  <em>"I worked 3.5 hours on the Website project, task Homepage — log it for today"</em><br/>
-  <em>"Any overdue invoices I should know about?"</em>
-</div>
-
+<!-- ═══════════════════════════════════════════════════════
+     ARCHITECTURE
+═══════════════════════════════════════════════════════ -->
 <h2>Technical Architecture</h2>
-<p>
-  The module acts as a thin MCP/OAuth server inside Odoo. When Claude calls a tool:
-</p>
+<p>The module acts as a thin MCP/OAuth server inside Odoo. When Claude calls a tool:</p>
 <ol>
   <li>The Bearer token is validated locally against your configured MCP token</li>
   <li>Your license key, Odoo API key and Anthropic key are read from <code>ir.config_parameter</code></li>
@@ -161,10 +157,567 @@
   <li>Odoo instance accessible from the internet (for Odoo.sh: automatic)</li>
 </ul>
 
+<h2>Example Conversations</h2>
+<div class="highlight">
+  <em>"Show me the treasury report for this month"</em><br/>
+  <em>"How much VAT do I owe this quarter?"</em><br/>
+  <em>"Create a draft invoice for Acme Corp, €1,200 for consulting services"</em><br/>
+  <em>"Are there any bank movements I haven't matched yet?"</em><br/>
+  <em>"I worked 3.5 hours on the Website project, task Homepage — log it for today"</em><br/>
+  <em>"Any overdue invoices I should know about?"</em>
+</div>
+
 <h2>Support</h2>
-<p>
-  Documentation and support at <a href="https://apps.uniasser.net">apps.uniasser.net</a> — soporte@uniasser.com
-</p>
+<p>Documentation and support at <a href="https://apps.uniasser.net">apps.uniasser.net</a> — soporte@uniasser.com</p>
+
+<div class="divider">────────────── 📖 USER GUIDE ──────────────</div>
+
+<!-- ╔═══════════════════════════════════════════════════════╗
+     ║              ENGLISH USER GUIDE                      ║
+     ╚═══════════════════════════════════════════════════════╝ -->
+
+<div class="lang-section">
+<div class="lang-header en">🇬🇧 &nbsp;Complete Installation &amp; User Guide — English</div>
+<div class="lang-body">
+
+<h2>Prerequisites</h2>
+<ul>
+  <li>An active Odoo instance (16, 17, 18, 19 or Odoo.sh) accessible from the internet</li>
+  <li>A license key from <a href="https://apps.uniasser.net">apps.uniasser.net</a></li>
+  <li>An Anthropic API key from <a href="https://console.anthropic.com">console.anthropic.com</a> (Claude access)</li>
+  <li>Administrator access to your Odoo instance</li>
+</ul>
+
+<!-- ─── STEP 1: INSTALL MODULE ─── -->
+<h2>Step 1 — Install the Module</h2>
+
+<h3>Option A — Standard Odoo (ZIP upload)</h3>
+<ol>
+  <li>Download the ZIP file matching your Odoo version from <a href="https://apps.uniasser.net">apps.uniasser.net</a> or apps.odoo.com</li>
+  <li>In Odoo go to <strong>Settings → Apps</strong></li>
+  <li>Click <strong>Upload App</strong> and select the downloaded ZIP</li>
+  <li>Search for <em>"IA Treasury Control"</em> and click <strong>Install</strong></li>
+</ol>
+
+<h3>Option B — Odoo.sh</h3>
+<ol>
+  <li>Go to your Odoo.sh project → <strong>Branches → Production</strong></li>
+  <li>In the <strong>Code</strong> tab, click <strong>Add a module</strong></li>
+  <li>Enter the GitHub repository URL: <code>https://github.com/enricm2/ia-treasury-control</code></li>
+  <li>Select the branch matching your Odoo version (e.g., <code>16.0</code>, <code>17.0</code>)</li>
+  <li>In Odoo go to <strong>Settings → Apps</strong>, search for <em>"IA Treasury Control"</em> and install</li>
+</ol>
+
+<h3>Option C — Command Line (self-hosted)</h3>
+<pre><code># Copy module to your addons path
+cp -r ia_agents_treasury_control /opt/odoo/custom-addons/
+
+# Update Odoo addons list
+./odoo-bin -c /etc/odoo.conf -u ia_agents_treasury_control --stop-after-init</code></pre>
+
+<!-- ─── STEP 2: CONFIGURE ─── -->
+<h2>Step 2 — Configure the Module</h2>
+
+<p>Go to <strong>Settings → IA Treasury Control</strong> (scroll down in the Settings page).</p>
+
+<h3>2.1 — Enter your License Key</h3>
+<div class="step">
+  <span class="step-num">1</span> In the <strong>License Key</strong> field, enter your license key (format: <code>XXXX-XXXX-XXXX-XXXX</code>)<br/>
+  <span class="step-num">2</span> Click <strong>Validate License</strong><br/>
+  <span class="step-num">3</span> The status should change to <em>"Active"</em>
+</div>
+<div class="info">Get your license at <a href="https://apps.uniasser.net">apps.uniasser.net</a>. Free trial licenses are available.</div>
+
+<h3>2.2 — Generate an Odoo API Key</h3>
+<div class="step">
+  <span class="step-num">1</span> Go to <strong>Settings → Users &amp; Companies → Users</strong><br/>
+  <span class="step-num">2</span> Click on your user<br/>
+  <span class="step-num">3</span> Go to the <strong>API Keys</strong> tab → click <strong>New API Key</strong><br/>
+  <span class="step-num">4</span> Enter a name (e.g., <em>"MCP Treasury"</em>) and click <strong>Generate Key</strong><br/>
+  <span class="step-num">5</span> <strong>Copy the key immediately</strong> — it will not be shown again<br/>
+  <span class="step-num">6</span> Paste it in <strong>Settings → IA Treasury Control → Odoo API Key</strong>
+</div>
+<div class="warning"><strong>Important:</strong> Copy the API key immediately after generation. Once you close the dialog, it cannot be retrieved.</div>
+
+<h3>2.3 — Add your Anthropic API Key</h3>
+<div class="step">
+  <span class="step-num">1</span> Go to <a href="https://console.anthropic.com">console.anthropic.com</a><br/>
+  <span class="step-num">2</span> Create an account and go to <strong>API Keys → Create Key</strong><br/>
+  <span class="step-num">3</span> Copy the key (starts with <code>sk-ant-</code>)<br/>
+  <span class="step-num">4</span> Paste it in <strong>Settings → IA Treasury Control → Anthropic API Key</strong>
+</div>
+
+<h3>2.4 — Copy MCP Server URL and Token</h3>
+<div class="step">
+  In <strong>Settings → IA Treasury Control</strong>, copy the two values:<br/><br/>
+  • <strong>MCP Server URL</strong> — looks like <code>https://your-odoo.com/mcp</code><br/>
+  • <strong>MCP Token</strong> — a long random string used to authenticate Claude
+</div>
+
+<!-- ─── STEP 3: CONNECT TO CLAUDE ─── -->
+<h2>Step 3 — Connect to Claude.ai</h2>
+
+<h3>Option A — Claude.ai Web (claude.ai)</h3>
+<ol>
+  <li>Go to <a href="https://claude.ai">claude.ai</a> and log in</li>
+  <li>Click on your profile → <strong>Settings → Integrations</strong></li>
+  <li>Click <strong>Add Integration</strong> → <strong>Model Context Protocol (MCP)</strong></li>
+  <li>Fill in:
+    <ul>
+      <li><strong>Name:</strong> Odoo Treasury (or any name you prefer)</li>
+      <li><strong>MCP Server URL:</strong> paste the URL from Step 2.4</li>
+      <li><strong>Authorization:</strong> Bearer &lt;paste the MCP Token from Step 2.4&gt;</li>
+    </ul>
+  </li>
+  <li>Click <strong>Save</strong></li>
+  <li>Start a new conversation and you'll see the Odoo tools available</li>
+</ol>
+
+<h3>Option B — Claude Desktop App (Mac / Windows)</h3>
+<p>Edit your Claude Desktop configuration file:</p>
+
+<p><strong>Mac:</strong> <code>~/Library/Application Support/Claude/claude_desktop_config.json</code><br/>
+<strong>Windows:</strong> <code>%APPDATA%\Claude\claude_desktop_config.json</code></p>
+
+<pre><code>{
+  "mcpServers": {
+    "odoo-treasury": {
+      "url": "https://your-odoo.com/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_MCP_TOKEN_HERE"
+      }
+    }
+  }
+}</code></pre>
+
+<p>Replace <code>https://your-odoo.com/mcp</code> and <code>YOUR_MCP_TOKEN_HERE</code> with the values from Step 2.4. Restart Claude Desktop.</p>
+
+<!-- ─── OTHER AI PROVIDERS ─── -->
+<h2>Step 4 — Connect to Other AI Providers (Optional)</h2>
+
+<h3>Google Gemini CLI</h3>
+<p>Edit your Gemini config file at <code>~/.gemini/settings.json</code>:</p>
+<pre><code>{
+  "mcpServers": {
+    "odoo-treasury": {
+      "httpUrl": "https://your-odoo.com/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_MCP_TOKEN_HERE"
+      }
+    }
+  }
+}</code></pre>
+
+<h3>ChatGPT / OpenAI (GPT Actions)</h3>
+<ol>
+  <li>Go to <a href="https://platform.openai.com">platform.openai.com</a> → <strong>My GPTs → Create a GPT</strong></li>
+  <li>Go to <strong>Configure → Actions → Create new action</strong></li>
+  <li>Import schema from URL: <code>https://your-odoo.com/mcp/openapi.json</code></li>
+  <li>Set authentication: <strong>API Key</strong> → enter your MCP Token with prefix <code>Bearer </code></li>
+  <li>Save and test the GPT</li>
+</ol>
+
+<h3>WhatsApp via Twilio</h3>
+<ol>
+  <li>Create a <a href="https://www.twilio.com">Twilio</a> account and get a WhatsApp-enabled number</li>
+  <li>In Twilio Console → <strong>Messaging → Settings → WhatsApp Sandbox</strong></li>
+  <li>Set the webhook URL to a middleware that bridges WhatsApp messages to your MCP server<br/>
+      (requires a custom integration service — contact <a href="mailto:soporte@uniasser.com">soporte@uniasser.com</a> for setup assistance)</li>
+</ol>
+
+<!-- ─── USAGE EXAMPLES ─── -->
+<h2>Step 5 — Start Using It</h2>
+<p>Once connected, simply ask Claude in natural language:</p>
+
+<div class="highlight">
+<strong>Treasury &amp; Finance</strong><br/>
+"Show me the treasury report for this month"<br/>
+"What's my current cash position?"<br/>
+"How much VAT do I owe this quarter?"<br/>
+"Give me the account ledger for account 430000"<br/>
+"What's the balance on all my bank accounts?"<br/><br/>
+
+<strong>Invoices</strong><br/>
+"Create a draft invoice for Acme Corp, €1,200 for consulting services, 21% VAT"<br/>
+"Which invoices from Acme Corp are still unpaid?"<br/>
+"Process the invoices in my inbox"<br/><br/>
+
+<strong>Bank Reconciliation</strong><br/>
+"Are there any bank movements I haven't matched yet?"<br/>
+"Match the €450 payment from last Tuesday to an open invoice"<br/><br/>
+
+<strong>Timesheets</strong><br/>
+"I worked 3.5 hours on the Website project, task Homepage — log it for today"<br/>
+"Create a new project called Q3 Marketing"<br/>
+"Add a task called 'Landing page design' to the Marketing project"<br/><br/>
+
+<strong>Alerts</strong><br/>
+"Any overdue invoices I should know about?"<br/>
+"Are there any upcoming tax deadlines?"<br/>
+"Give me a financial health summary"
+</div>
+
+<!-- ─── AUTO-INSTALL SCRIPTS ─── -->
+<h2>Auto-Install Scripts</h2>
+
+<h3>Mac / Linux — Bash Script</h3>
+<p>Open Terminal and run:</p>
+<pre><code>#!/bin/bash
+# IA Treasury Control — Auto-configure Claude Desktop
+# Run: bash install_claude_mcp.sh
+
+echo "=== IA Treasury Control — Claude Desktop Setup ==="
+read -p "Enter your Odoo URL (e.g. https://myodoo.odoo.com): " ODOO_URL
+read -p "Enter your MCP Token: " MCP_TOKEN
+
+ODOO_URL="${ODOO_URL%/}"   # remove trailing slash
+MCP_URL="${ODOO_URL}/mcp"
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    CONFIG_DIR="$HOME/Library/Application Support/Claude"
+else
+    CONFIG_DIR="$HOME/.config/Claude"
+fi
+
+mkdir -p "$CONFIG_DIR"
+CONFIG_FILE="$CONFIG_DIR/claude_desktop_config.json"
+
+cat > "$CONFIG_FILE" &lt;&lt;EOF
+{
+  "mcpServers": {
+    "odoo-treasury": {
+      "url": "${MCP_URL}",
+      "headers": {
+        "Authorization": "Bearer ${MCP_TOKEN}"
+      }
+    }
+  }
+}
+EOF
+
+echo "✅ Config written to: $CONFIG_FILE"
+echo "   MCP URL: $MCP_URL"
+echo ""
+echo "Restart Claude Desktop to apply changes."</code></pre>
+
+<p>Save this as <code>install_claude_mcp.sh</code>, then run: <code>bash install_claude_mcp.sh</code></p>
+
+<h3>Windows — PowerShell Script</h3>
+<pre><code># IA Treasury Control — Auto-configure Claude Desktop
+# Save as install_claude_mcp.ps1, then run in PowerShell
+
+Write-Host "=== IA Treasury Control — Claude Desktop Setup ===" -ForegroundColor Cyan
+
+$OdooUrl = Read-Host "Enter your Odoo URL (e.g. https://myodoo.odoo.com)"
+$McpToken = Read-Host "Enter your MCP Token"
+
+$OdooUrl = $OdooUrl.TrimEnd('/')
+$McpUrl   = "$OdooUrl/mcp"
+
+$ConfigDir  = "$env:APPDATA\Claude"
+$ConfigFile = "$ConfigDir\claude_desktop_config.json"
+
+if (-not (Test-Path $ConfigDir)) { New-Item -ItemType Directory -Path $ConfigDir | Out-Null }
+
+$Config = @{
+    mcpServers = @{
+        "odoo-treasury" = @{
+            url     = $McpUrl
+            headers = @{ Authorization = "Bearer $McpToken" }
+        }
+    }
+} | ConvertTo-Json -Depth 5
+
+Set-Content -Path $ConfigFile -Value $Config -Encoding UTF8
+
+Write-Host "✅ Config written to: $ConfigFile" -ForegroundColor Green
+Write-Host "   MCP URL: $McpUrl"
+Write-Host ""
+Write-Host "Restart Claude Desktop to apply changes." -ForegroundColor Yellow</code></pre>
+
+<!-- ─── TROUBLESHOOTING ─── -->
+<h2>Troubleshooting</h2>
+
+<table>
+  <tr><th>Error</th><th>Cause</th><th>Solution</th></tr>
+  <tr>
+    <td>"License not valid"</td>
+    <td>Wrong key or expired</td>
+    <td>Check the key at apps.uniasser.net. Make sure there are no extra spaces.</td>
+  </tr>
+  <tr>
+    <td>"Authentication failed" / 401</td>
+    <td>Wrong MCP Token</td>
+    <td>Copy the token again from Settings → IA Treasury Control. No spaces.</td>
+  </tr>
+  <tr>
+    <td>"Cannot connect to Odoo"</td>
+    <td>Odoo not reachable from internet</td>
+    <td>Make sure your Odoo URL is accessible via HTTPS from outside your network.</td>
+  </tr>
+  <tr>
+    <td>"Odoo API Key invalid"</td>
+    <td>Wrong or deleted API key</td>
+    <td>Generate a new API key in Odoo → Users → API Keys and update the settings.</td>
+  </tr>
+  <tr>
+    <td>301 redirect error</td>
+    <td>Using HTTP instead of HTTPS</td>
+    <td>Make sure the MCP URL starts with <code>https://</code></td>
+  </tr>
+  <tr>
+    <td>Tools not appearing in Claude</td>
+    <td>MCP server not connected</td>
+    <td>Check Settings → Integrations in claude.ai. Try removing and re-adding the integration.</td>
+  </tr>
+  <tr>
+    <td>"Module cannot be uninstalled"</td>
+    <td>Module listed in server_wide_modules</td>
+    <td>Remove <code>ia_agents_treasury_control</code> from <code>server_wide_modules</code> in your Odoo config file and restart Odoo.</td>
+  </tr>
+</table>
+
+<div class="success">
+  <strong>Need help?</strong> Contact us at <a href="mailto:soporte@uniasser.com">soporte@uniasser.com</a> or visit <a href="https://apps.uniasser.net">apps.uniasser.net</a>
+</div>
+
+</div><!-- /lang-body -->
+</div><!-- /lang-section -->
+
+
+<!-- ╔═══════════════════════════════════════════════════════╗
+     ║              SPANISH USER GUIDE                      ║
+     ╚═══════════════════════════════════════════════════════╝ -->
+
+<div class="lang-section">
+<div class="lang-header es">🇪🇸 &nbsp;Guía Completa de Instalación y Uso — Español</div>
+<div class="lang-body">
+
+<h2>Requisitos previos</h2>
+<ul>
+  <li>Una instancia de Odoo activa (16, 17, 18, 19 u Odoo.sh) accesible desde internet</li>
+  <li>Una licencia de <a href="https://apps.uniasser.net">apps.uniasser.net</a></li>
+  <li>Una clave API de Anthropic desde <a href="https://console.anthropic.com">console.anthropic.com</a> (para Claude)</li>
+  <li>Acceso de administrador a tu instancia de Odoo</li>
+</ul>
+
+<!-- ─── PASO 1 ─── -->
+<h2>Paso 1 — Instalar el módulo</h2>
+
+<h3>Opción A — Odoo estándar (subida de ZIP)</h3>
+<ol>
+  <li>Descarga el ZIP para tu versión de Odoo desde <a href="https://apps.uniasser.net">apps.uniasser.net</a> o apps.odoo.com</li>
+  <li>En Odoo ve a <strong>Ajustes → Aplicaciones</strong></li>
+  <li>Haz clic en <strong>Subir aplicación</strong> y selecciona el ZIP descargado</li>
+  <li>Busca <em>"IA Treasury Control"</em> y haz clic en <strong>Instalar</strong></li>
+</ol>
+
+<h3>Opción B — Odoo.sh</h3>
+<ol>
+  <li>Ve a tu proyecto Odoo.sh → <strong>Ramas → Producción</strong></li>
+  <li>En la pestaña <strong>Código</strong>, haz clic en <strong>Añadir módulo</strong></li>
+  <li>Introduce la URL del repositorio: <code>https://github.com/enricm2/ia-treasury-control</code></li>
+  <li>Selecciona la rama correspondiente a tu versión (p. ej. <code>16.0</code>, <code>17.0</code>)</li>
+  <li>En Odoo ve a <strong>Ajustes → Aplicaciones</strong>, busca <em>"IA Treasury Control"</em> e instala</li>
+</ol>
+
+<h3>Opción C — Línea de comandos (autoalojado)</h3>
+<pre><code># Copiar módulo a la ruta de addons
+cp -r ia_agents_treasury_control /opt/odoo/custom-addons/
+
+# Actualizar lista de addons de Odoo
+./odoo-bin -c /etc/odoo.conf -u ia_agents_treasury_control --stop-after-init</code></pre>
+
+<!-- ─── PASO 2 ─── -->
+<h2>Paso 2 — Configurar el módulo</h2>
+
+<p>Ve a <strong>Ajustes → IA Treasury Control</strong> (desplázate hacia abajo en la página de Ajustes).</p>
+
+<h3>2.1 — Introducir la clave de licencia</h3>
+<div class="step">
+  <span class="step-num">1</span> En el campo <strong>Clave de licencia</strong>, introduce tu licencia (formato: <code>XXXX-XXXX-XXXX-XXXX</code>)<br/>
+  <span class="step-num">2</span> Haz clic en <strong>Validar licencia</strong><br/>
+  <span class="step-num">3</span> El estado debe cambiar a <em>"Activa"</em>
+</div>
+<div class="info">Obtén tu licencia en <a href="https://apps.uniasser.net">apps.uniasser.net</a>. Hay licencias de prueba gratuitas disponibles.</div>
+
+<h3>2.2 — Generar una clave API de Odoo</h3>
+<div class="step">
+  <span class="step-num">1</span> Ve a <strong>Ajustes → Usuarios y Compañías → Usuarios</strong><br/>
+  <span class="step-num">2</span> Haz clic en tu usuario<br/>
+  <span class="step-num">3</span> Ve a la pestaña <strong>Claves API</strong> → haz clic en <strong>Nueva clave API</strong><br/>
+  <span class="step-num">4</span> Escribe un nombre (p.ej. <em>"MCP Treasury"</em>) y haz clic en <strong>Generar clave</strong><br/>
+  <span class="step-num">5</span> <strong>Copia la clave inmediatamente</strong> — no se mostrará de nuevo<br/>
+  <span class="step-num">6</span> Pégala en <strong>Ajustes → IA Treasury Control → Clave API de Odoo</strong>
+</div>
+<div class="warning"><strong>Importante:</strong> Copia la clave API justo después de generarla. Una vez cierres el diálogo, no podrás recuperarla.</div>
+
+<h3>2.3 — Añadir la clave API de Anthropic</h3>
+<div class="step">
+  <span class="step-num">1</span> Ve a <a href="https://console.anthropic.com">console.anthropic.com</a><br/>
+  <span class="step-num">2</span> Crea una cuenta y ve a <strong>API Keys → Create Key</strong><br/>
+  <span class="step-num">3</span> Copia la clave (empieza por <code>sk-ant-</code>)<br/>
+  <span class="step-num">4</span> Pégala en <strong>Ajustes → IA Treasury Control → Clave API de Anthropic</strong>
+</div>
+
+<h3>2.4 — Copiar URL y Token del servidor MCP</h3>
+<div class="step">
+  En <strong>Ajustes → IA Treasury Control</strong>, copia los dos valores:<br/><br/>
+  • <strong>URL del servidor MCP</strong> — tiene el formato <code>https://tu-odoo.com/mcp</code><br/>
+  • <strong>Token MCP</strong> — una cadena larga aleatoria para autenticar a Claude
+</div>
+
+<!-- ─── PASO 3 ─── -->
+<h2>Paso 3 — Conectar con Claude.ai</h2>
+
+<h3>Opción A — Claude.ai Web (claude.ai)</h3>
+<ol>
+  <li>Ve a <a href="https://claude.ai">claude.ai</a> e inicia sesión</li>
+  <li>Haz clic en tu perfil → <strong>Configuración → Integraciones</strong></li>
+  <li>Haz clic en <strong>Añadir integración</strong> → <strong>Model Context Protocol (MCP)</strong></li>
+  <li>Completa los campos:
+    <ul>
+      <li><strong>Nombre:</strong> Odoo Treasury (o el que prefieras)</li>
+      <li><strong>URL del servidor MCP:</strong> pega la URL del Paso 2.4</li>
+      <li><strong>Autorización:</strong> Bearer &lt;pega el Token MCP del Paso 2.4&gt;</li>
+    </ul>
+  </li>
+  <li>Haz clic en <strong>Guardar</strong></li>
+  <li>Inicia una nueva conversación y verás las herramientas de Odoo disponibles</li>
+</ol>
+
+<h3>Opción B — Claude Desktop (Mac / Windows)</h3>
+<p>Edita el fichero de configuración de Claude Desktop:</p>
+
+<p><strong>Mac:</strong> <code>~/Library/Application Support/Claude/claude_desktop_config.json</code><br/>
+<strong>Windows:</strong> <code>%APPDATA%\Claude\claude_desktop_config.json</code></p>
+
+<pre><code>{
+  "mcpServers": {
+    "odoo-treasury": {
+      "url": "https://tu-odoo.com/mcp",
+      "headers": {
+        "Authorization": "Bearer TU_TOKEN_MCP_AQUI"
+      }
+    }
+  }
+}</code></pre>
+
+<p>Sustituye los valores con los del Paso 2.4 y reinicia Claude Desktop.</p>
+
+<!-- ─── PASO 4 ─── -->
+<h2>Paso 4 — Conectar con otros proveedores de IA (opcional)</h2>
+
+<h3>Google Gemini CLI</h3>
+<p>Edita el fichero de configuración en <code>~/.gemini/settings.json</code>:</p>
+<pre><code>{
+  "mcpServers": {
+    "odoo-treasury": {
+      "httpUrl": "https://tu-odoo.com/mcp",
+      "headers": {
+        "Authorization": "Bearer TU_TOKEN_MCP_AQUI"
+      }
+    }
+  }
+}</code></pre>
+
+<h3>ChatGPT / OpenAI (GPT Actions)</h3>
+<ol>
+  <li>Ve a <a href="https://platform.openai.com">platform.openai.com</a> → <strong>Mis GPTs → Crear un GPT</strong></li>
+  <li>Ve a <strong>Configurar → Acciones → Crear nueva acción</strong></li>
+  <li>Importa el esquema desde la URL: <code>https://tu-odoo.com/mcp/openapi.json</code></li>
+  <li>Configura autenticación: <strong>API Key</strong> → introduce tu Token MCP con el prefijo <code>Bearer </code></li>
+  <li>Guarda y prueba el GPT</li>
+</ol>
+
+<h3>WhatsApp via Twilio</h3>
+<ol>
+  <li>Crea una cuenta en <a href="https://www.twilio.com">Twilio</a> y obtén un número con WhatsApp</li>
+  <li>En la consola Twilio → <strong>Messaging → Settings → WhatsApp Sandbox</strong></li>
+  <li>Configura la URL de webhook a un servicio intermediario que conecte WhatsApp con tu servidor MCP<br/>
+      (requiere un servicio de integración personalizado — contacta <a href="mailto:soporte@uniasser.com">soporte@uniasser.com</a> para ayuda)</li>
+</ol>
+
+<!-- ─── PASO 5 ─── -->
+<h2>Paso 5 — Empieza a usarlo</h2>
+<p>Una vez conectado, simplemente escribe a Claude en lenguaje natural:</p>
+
+<div class="highlight">
+<strong>Tesorería y Finanzas</strong><br/>
+"Muéstrame el informe de tesorería de este mes"<br/>
+"¿Cuál es mi posición de caja actual?"<br/>
+"¿Cuánto IVA debo pagar este trimestre?"<br/>
+"Dame el libro mayor de la cuenta 430000"<br/>
+"¿Cuál es el saldo de todas mis cuentas bancarias?"<br/><br/>
+
+<strong>Facturas</strong><br/>
+"Crea una factura borrador para Acme Corp, 1.200€ por servicios de consultoría, IVA 21%"<br/>
+"¿Qué facturas de Acme Corp están pendientes de pago?"<br/>
+"Procesa las facturas que tengo en el buzón de entrada"<br/><br/>
+
+<strong>Conciliación Bancaria</strong><br/>
+"¿Hay movimientos bancarios que no he conciliado todavía?"<br/>
+"Empareja el pago de 450€ del martes pasado con una factura abierta"<br/><br/>
+
+<strong>Partes de horas</strong><br/>
+"He trabajado 3,5 horas en el proyecto Web, tarea Página Principal — regístralo para hoy"<br/>
+"Crea un nuevo proyecto llamado Marketing Q3"<br/>
+"Añade una tarea llamada 'Diseño landing page' al proyecto Marketing"<br/><br/>
+
+<strong>Alertas</strong><br/>
+"¿Hay facturas vencidas que deba conocer?"<br/>
+"¿Hay próximas fechas límite de impuestos?"<br/>
+"Dame un resumen de la salud financiera de la empresa"
+</div>
+
+<!-- ─── SOLUCIÓN DE PROBLEMAS ─── -->
+<h2>Solución de problemas</h2>
+
+<table>
+  <tr><th>Error</th><th>Causa</th><th>Solución</th></tr>
+  <tr>
+    <td>"Licencia no válida"</td>
+    <td>Clave incorrecta o caducada</td>
+    <td>Verifica la clave en apps.uniasser.net. Asegúrate de que no hay espacios extra.</td>
+  </tr>
+  <tr>
+    <td>"Autenticación fallida" / 401</td>
+    <td>Token MCP incorrecto</td>
+    <td>Copia el token de nuevo desde Ajustes → IA Treasury Control. Sin espacios.</td>
+  </tr>
+  <tr>
+    <td>"No se puede conectar a Odoo"</td>
+    <td>Odoo no accesible desde internet</td>
+    <td>Asegúrate de que tu URL de Odoo es accesible vía HTTPS desde fuera de tu red.</td>
+  </tr>
+  <tr>
+    <td>"Clave API de Odoo no válida"</td>
+    <td>Clave incorrecta o eliminada</td>
+    <td>Genera una nueva clave API en Odoo → Usuarios → Claves API y actualiza la configuración.</td>
+  </tr>
+  <tr>
+    <td>Error de redirección 301</td>
+    <td>Usando HTTP en lugar de HTTPS</td>
+    <td>Asegúrate de que la URL del MCP empieza por <code>https://</code></td>
+  </tr>
+  <tr>
+    <td>Las herramientas no aparecen en Claude</td>
+    <td>Servidor MCP no conectado</td>
+    <td>Revisa Configuración → Integraciones en claude.ai. Intenta eliminar y volver a añadir la integración.</td>
+  </tr>
+  <tr>
+    <td>"El módulo no se puede desinstalar"</td>
+    <td>Módulo en server_wide_modules</td>
+    <td>Elimina <code>ia_agents_treasury_control</code> de <code>server_wide_modules</code> en el fichero de configuración de Odoo y reinicia Odoo.</td>
+  </tr>
+</table>
+
+<div class="success">
+  <strong>¿Necesitas ayuda?</strong> Escríbenos a <a href="mailto:soporte@uniasser.com">soporte@uniasser.com</a> o visita <a href="https://apps.uniasser.net">apps.uniasser.net</a>
+</div>
+
+</div><!-- /lang-body -->
+</div><!-- /lang-section -->
 
 </body>
 </html>
