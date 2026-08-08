@@ -222,13 +222,36 @@ _TOOLS = [
     {
         "name": "get_treasury_forecast",
         "description": (
-            "Previsión de tesorería a 30, 60 y 90 días. Combina las facturas pendientes "
-            "de cobro y pago con el ritmo histórico de ventas y compras de los últimos "
-            "6 meses para proyectar el saldo de caja en cada horizonte. Úsalo cuando "
-            "el usuario pregunte por previsión, forecast, liquidez futura o cash flow "
-            "a medio plazo."
+            "Previsión de tesorería profesional: posición actual (saldo real, líneas de "
+            "crédito dispuestas, inversiones líquidas), préstamos y leasing en vigor con "
+            "cuota estimada, previsión a 30/60/90 días y rolling forecast a 13 semanas "
+            "(corto plazo) y 12 meses (medio plazo) con puntos de ruptura de caja, "
+            "KPIs (DSO/DPO/Runway), análisis de desviaciones vs. previsión anterior y "
+            "alertas de riesgo con plan de acción. Úsalo cuando el usuario pregunte por "
+            "previsión, forecast, liquidez futura o cash flow a medio plazo."
         ),
         "inputSchema": {"type": "object", "properties": {}},
+    },
+    {
+        "name": "get_treasury_excel_forecast",
+        "description": (
+            "Genera y descarga un Excel con la previsión de tesorería mes a mes (mes del "
+            "informe + hasta 6 meses siguientes, meses en columnas): ingresos previstos, "
+            "pagos a proveedores, cuotas de préstamos, IVA y retenciones trimestrales "
+            "(Mod. 303/111 en enero/abril/julio/octubre), pago a cuenta de Sociedades "
+            "(Mod. 202 en abril/octubre/diciembre si hubo beneficio el año anterior), "
+            "nóminas y otros gastos operativos. Incluye una segunda hoja con KPIs "
+            "(DSO/DPO/Runway) y un análisis financiero experto redactado por IA. Úsalo "
+            "cuando el usuario pida un Excel, una previsión mensual detallada, o un "
+            "cuadro de tesorería con impuestos y nóminas."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "months": {"type": "integer", "default": 6, "description": "Meses hacia adelante (por defecto 6)."},
+                "date_from": {"type": "string", "description": "Mes de inicio YYYY-MM-DD (por defecto hoy)."},
+            },
+        },
     },
     {
         "name": "health_check",
