@@ -254,6 +254,31 @@ _TOOLS = [
         },
     },
     {
+        "name": "configure_credit_line",
+        "description": (
+            "Da de alta, actualiza o elimina una línea de crédito/póliza de crédito que "
+            "está registrada como una cuenta de tesorería (572) en vez de como cuenta de "
+            "deuda (520) — algo habitual en la práctica contable. El código de cuenta por "
+            "sí solo NO permite distinguir un banco puro de una póliza de crédito, así que "
+            "hace falta indicarlo una vez: número de cuenta y límite concedido. A partir de "
+            "ahí, el informe de tesorería excluye esa cuenta del saldo bancario y la "
+            "muestra aparte con su dispuesto/disponible real (límite - dispuesto). Úsalo "
+            "cuando el usuario diga que tiene una póliza de crédito en una cuenta de banco, "
+            "o cuando una alerta indique una cuenta 572 con saldo negativo sin configurar."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "account": {"type": "string", "description": "Número de cuenta contable (ej: 57200001)."},
+                "limit": {"type": "number", "description": "Límite concedido de la línea de crédito, en euros. Requerido salvo que action='remove'."},
+                "entity": {"type": "string", "description": "Nombre del banco/entidad (ej: Bankinter). Opcional."},
+                "notes": {"type": "string", "description": "Notas adicionales. Opcional."},
+                "action": {"type": "string", "enum": ["set", "remove", "list"], "default": "set",
+                           "description": "'set' da de alta/actualiza, 'remove' elimina, 'list' lista las configuradas (no necesita 'account')."},
+            },
+        },
+    },
+    {
         "name": "health_check",
         "description": "Comprueba que el servidor MCP y la conexión con Odoo están operativos.",
         "inputSchema": {"type": "object", "properties": {}},
