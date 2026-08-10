@@ -468,6 +468,73 @@ _TOOLS = [
             "required": ["activity_id"],
         },
     },
+    # ── Historial de comunicaciones CRM ───────────────────────────────────────
+    {
+        "name": "crm_get_communications",
+        "description": (
+            "Lista el historial de comunicaciones de un lead de Odoo CRM "
+            "(emails enviados/recibidos, llamadas, reuniones, notas, documentos). "
+            "Devuelve todas las entradas ordenadas por fecha."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "lead_id": {"type": "integer", "description": "ID del lead/oportunidad"},
+            },
+            "required": ["lead_id"],
+        },
+    },
+    {
+        "name": "crm_create_communication",
+        "description": (
+            "Añade una entrada al historial de comunicaciones de un lead de Odoo CRM. "
+            "Permite registrar emails, llamadas, reuniones, notas internas y documentos."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "lead_id": {"type": "integer", "description": "ID del lead"},
+                "subject": {"type": "string", "description": "Asunto o título de la comunicación"},
+                "action_type": {
+                    "type": "string",
+                    "description": "Tipo: email_sent, email_received, call, meeting, note, document, other",
+                    "enum": ["email_sent", "email_received", "call", "meeting", "note", "document", "other"],
+                },
+                "description": {"type": "string", "description": "Cuerpo o descripción detallada (HTML aceptado)"},
+                "date": {"type": "string", "description": "Fecha y hora (YYYY-MM-DD HH:MM:SS). Por defecto: ahora"},
+                "user_id": {"type": "integer", "description": "ID del responsable interno (por defecto: usuario actual)"},
+                "partner_id": {"type": "integer", "description": "ID del contacto del cliente"},
+            },
+            "required": ["lead_id", "subject"],
+        },
+    },
+    {
+        "name": "crm_update_communication",
+        "description": "Actualiza una entrada existente del historial de comunicaciones de un lead de Odoo CRM.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "communication_id": {"type": "integer", "description": "ID de la comunicación"},
+                "subject": {"type": "string"},
+                "action_type": {"type": "string", "enum": ["email_sent", "email_received", "call", "meeting", "note", "document", "other"]},
+                "description": {"type": "string"},
+                "date": {"type": "string"},
+                "partner_id": {"type": "integer"},
+            },
+            "required": ["communication_id"],
+        },
+    },
+    {
+        "name": "crm_delete_communication",
+        "description": "Elimina una entrada del historial de comunicaciones de un lead de Odoo CRM.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "communication_id": {"type": "integer", "description": "ID de la comunicación a eliminar"},
+            },
+            "required": ["communication_id"],
+        },
+    },
     # ── Gestor de Proyectos ────────────────────────────────────────────────────
     {
         "name": "project_get_projects",

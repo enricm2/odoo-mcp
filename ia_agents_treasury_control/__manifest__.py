@@ -1,6 +1,6 @@
 {
     "name": "IA Treasury Control (MCP)",
-    "version": "16.0.1.8.1",
+    "version": "16.0.1.8.2",
     "summary": "AI agent for treasury, tax, invoices and timesheets via Claude MCP",
     "description": """
 Connect your Odoo to Claude.ai and manage treasury, taxes, invoices and

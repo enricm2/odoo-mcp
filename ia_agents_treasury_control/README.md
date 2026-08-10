@@ -213,7 +213,10 @@ Once connected, Claude.ai has access to these tools:
 
 | Tool | What it does |
 |------|-------------|
-| `get_treasury_report` | Pending receivables, payables, and cash flow forecast |
+| `get_treasury_report` | Current cash position, drawn credit lines, loans, KPIs (DSO/DPO/Runway), pending receivables/payables and risk alerts with action plan |
+| `get_treasury_forecast` | Rolling 30/60/90-day forecast plus 13-week and 12-month rolling forecast, loan installments included, cash-crunch breakpoints, deviation vs. previous forecast |
+| `get_treasury_excel_forecast` | Downloadable Excel: month-by-month cash forecast (start month + 6 more), including quarterly VAT/withholdings, Corporate Tax installments, payroll and loan installments, plus a KPIs & expert-analysis sheet |
+| `configure_credit_line` | Register a credit line/policy that is booked as a treasury account (e.g. 572) instead of a debt account (520), with its real limit, so it's excluded from cash and shown separately with drawn/available |
 | `get_tax_status` | VAT collected, VAT paid, IRPF withholdings by quarter |
 | `create_draft_invoice` | Create a **draft** invoice in Odoo from natural language |
 | `run_bank_reconciliation` | Propose matches between bank movements and open invoices |
@@ -245,6 +248,12 @@ Once connected, Claude.ai has access to these tools:
 "Are there any overdue invoices?"
 
 "Show me the movements on account 4300 since January 1st"
+
+"Give me the 13-week cash flow forecast"
+
+"Generate the 6-month Excel treasury forecast"
+
+"I have a credit policy with Bankinter in account 57200001, limit 60,000 euros"
 ```
 
 ---
