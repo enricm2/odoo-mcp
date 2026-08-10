@@ -404,6 +404,70 @@ _TOOLS = [
             "required": ["contact_id"],
         },
     },
+    {
+        "name": "crm_get_attachments",
+        "description": "Lista los archivos adjuntos de un lead u oportunidad de Odoo CRM.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "lead_id": {"type": "integer", "description": "ID del lead/oportunidad"},
+            },
+            "required": ["lead_id"],
+        },
+    },
+    {
+        "name": "crm_upload_attachment",
+        "description": "Adjunta un archivo a un lead u oportunidad de Odoo CRM. El contenido debe enviarse en base64.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "lead_id": {"type": "integer"},
+                "filename": {"type": "string", "description": "Nombre del archivo con extensión (ej: propuesta.pdf)"},
+                "datas_b64": {"type": "string", "description": "Contenido del archivo codificado en base64"},
+                "mimetype": {"type": "string", "description": "MIME type opcional (ej: application/pdf)"},
+            },
+            "required": ["lead_id", "filename", "datas_b64"],
+        },
+    },
+    {
+        "name": "crm_get_activities",
+        "description": "Lista las actividades programadas de un lead u oportunidad de Odoo CRM (llamadas, reuniones, tareas pendientes, etc.).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "lead_id": {"type": "integer"},
+            },
+            "required": ["lead_id"],
+        },
+    },
+    {
+        "name": "crm_create_activity",
+        "description": "Crea una actividad en un lead u oportunidad de Odoo CRM (llamada, reunión, tarea, email, etc.).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "lead_id": {"type": "integer"},
+                "activity_type": {"type": "string", "description": "Tipo de actividad: Llamada, Reunión, Tarea, Email… (búsqueda parcial)"},
+                "summary": {"type": "string", "description": "Asunto o resumen de la actividad"},
+                "date_deadline": {"type": "string", "description": "Fecha límite (YYYY-MM-DD)"},
+                "note": {"type": "string", "description": "Nota interna adicional"},
+                "user_email": {"type": "string", "description": "Email del responsable (si no se indica, se asigna al usuario actual)"},
+            },
+            "required": ["lead_id", "date_deadline"],
+        },
+    },
+    {
+        "name": "crm_mark_activity_done",
+        "description": "Marca una actividad de Odoo CRM como realizada.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "activity_id": {"type": "integer", "description": "ID de la actividad"},
+                "feedback": {"type": "string", "description": "Comentario de cierre opcional"},
+            },
+            "required": ["activity_id"],
+        },
+    },
     # ── Gestor de Proyectos ────────────────────────────────────────────────────
     {
         "name": "project_get_projects",
