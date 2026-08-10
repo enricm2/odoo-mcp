@@ -283,6 +283,217 @@ _TOOLS = [
         "description": "Comprueba que el servidor MCP y la conexión con Odoo están operativos.",
         "inputSchema": {"type": "object", "properties": {}},
     },
+    # ── CRM ───────────────────────────────────────────────────────────────────
+    {
+        "name": "crm_get_pipeline",
+        "description": "Muestra el pipeline CRM completo de Odoo agrupado por etapas, con ingresos esperados y probabilidades. Ideal para revisar el estado comercial de un vistazo.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "type": {"type": "string", "enum": ["opportunity", "lead"], "description": "Tipo de registros a mostrar (por defecto: opportunity)"},
+            },
+        },
+    },
+    {
+        "name": "crm_get_leads",
+        "description": "Lista leads u oportunidades de Odoo CRM con filtros opcionales por etapa, fecha y tipo.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "type": {"type": "string", "enum": ["opportunity", "lead"]},
+                "stage": {"type": "string", "description": "Nombre (parcial) de la etapa"},
+                "date_from": {"type": "string", "description": "Fecha desde (YYYY-MM-DD)"},
+                "limit": {"type": "integer", "description": "Máximo de resultados (def: 50)"},
+            },
+        },
+    },
+    {
+        "name": "crm_get_lead_detail",
+        "description": "Muestra el detalle completo de un lead u oportunidad de Odoo CRM por su ID.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "lead_id": {"type": "integer", "description": "ID del lead/oportunidad"},
+            },
+            "required": ["lead_id"],
+        },
+    },
+    {
+        "name": "crm_create_lead",
+        "description": "Crea un nuevo lead u oportunidad en Odoo CRM.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "name": {"type": "string", "description": "Nombre del lead/oportunidad"},
+                "type": {"type": "string", "enum": ["opportunity", "lead"]},
+                "partner_name": {"type": "string", "description": "Nombre del cliente (búsqueda parcial)"},
+                "stage": {"type": "string", "description": "Nombre de la etapa"},
+                "expected_revenue": {"type": "number", "description": "Ingreso esperado en euros"},
+                "probability": {"type": "number", "description": "Probabilidad de cierre (0-100)"},
+                "date_deadline": {"type": "string", "description": "Fecha de cierre prevista (YYYY-MM-DD)"},
+                "description": {"type": "string"},
+                "email_from": {"type": "string"},
+                "phone": {"type": "string"},
+            },
+            "required": ["name"],
+        },
+    },
+    {
+        "name": "crm_update_lead",
+        "description": "Actualiza un lead u oportunidad existente en Odoo CRM (etapa, importe, descripción, etc.).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "lead_id": {"type": "integer"},
+                "name": {"type": "string"},
+                "stage": {"type": "string", "description": "Nombre de la nueva etapa"},
+                "expected_revenue": {"type": "number"},
+                "probability": {"type": "number"},
+                "date_deadline": {"type": "string"},
+                "description": {"type": "string"},
+                "email_from": {"type": "string"},
+                "phone": {"type": "string"},
+            },
+            "required": ["lead_id"],
+        },
+    },
+    {
+        "name": "crm_get_contacts",
+        "description": "Lista contactos/clientes de Odoo con filtro por nombre.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "name": {"type": "string", "description": "Búsqueda parcial por nombre"},
+                "is_customer": {"type": "boolean", "description": "Filtrar solo clientes"},
+                "limit": {"type": "integer"},
+            },
+        },
+    },
+    {
+        "name": "crm_create_contact",
+        "description": "Crea un nuevo contacto/cliente en Odoo.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "name": {"type": "string"},
+                "email": {"type": "string"},
+                "phone": {"type": "string"},
+                "mobile": {"type": "string"},
+                "street": {"type": "string"},
+                "city": {"type": "string"},
+                "vat": {"type": "string", "description": "NIF/CIF"},
+            },
+            "required": ["name"],
+        },
+    },
+    {
+        "name": "crm_update_contact",
+        "description": "Actualiza un contacto existente en Odoo.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "contact_id": {"type": "integer"},
+                "name": {"type": "string"},
+                "email": {"type": "string"},
+                "phone": {"type": "string"},
+                "mobile": {"type": "string"},
+                "street": {"type": "string"},
+                "city": {"type": "string"},
+                "vat": {"type": "string"},
+            },
+            "required": ["contact_id"],
+        },
+    },
+    # ── Gestor de Proyectos ────────────────────────────────────────────────────
+    {
+        "name": "project_get_projects",
+        "description": "Lista todos los proyectos activos de Odoo con responsable, cliente y número de tareas.",
+        "inputSchema": {"type": "object", "properties": {}},
+    },
+    {
+        "name": "project_get_project_detail",
+        "description": "Muestra el detalle completo de un proyecto de Odoo con todas sus tareas agrupadas por etapa.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "project_id": {"type": "integer"},
+            },
+            "required": ["project_id"],
+        },
+    },
+    {
+        "name": "project_get_tasks",
+        "description": "Lista tareas de Odoo con filtro opcional por proyecto.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "project_id": {"type": "integer"},
+                "limit": {"type": "integer"},
+            },
+        },
+    },
+    {
+        "name": "project_create_project",
+        "description": "Crea un nuevo proyecto en Odoo.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "name": {"type": "string"},
+                "description": {"type": "string"},
+                "date_start": {"type": "string", "description": "YYYY-MM-DD"},
+                "date": {"type": "string", "description": "Fecha de fin (YYYY-MM-DD)"},
+                "partner_name": {"type": "string", "description": "Cliente del proyecto"},
+            },
+            "required": ["name"],
+        },
+    },
+    {
+        "name": "project_create_task",
+        "description": "Crea una nueva tarea en un proyecto de Odoo.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "name": {"type": "string", "description": "Nombre de la tarea"},
+                "project_name": {"type": "string", "description": "Nombre del proyecto"},
+                "description": {"type": "string"},
+                "date_deadline": {"type": "string", "description": "YYYY-MM-DD"},
+                "planned_hours": {"type": "number"},
+            },
+            "required": ["name", "project_name"],
+        },
+    },
+    {
+        "name": "project_update_task",
+        "description": "Actualiza una tarea de Odoo: cambia etapa, descripción, fecha límite o horas planificadas.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "task_id": {"type": "integer"},
+                "name": {"type": "string"},
+                "stage": {"type": "string", "description": "Nombre de la nueva etapa"},
+                "description": {"type": "string"},
+                "date_deadline": {"type": "string"},
+                "planned_hours": {"type": "number"},
+                "priority": {"type": "string", "enum": ["0", "1"]},
+            },
+            "required": ["task_id"],
+        },
+    },
+    {
+        "name": "project_get_timesheets",
+        "description": "Lista imputaciones de tiempo en Odoo con filtros por proyecto, tarea y fechas.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "project_name": {"type": "string"},
+                "project_id": {"type": "integer"},
+                "task_id": {"type": "integer"},
+                "date_from": {"type": "string", "description": "YYYY-MM-DD"},
+                "date_to": {"type": "string", "description": "YYYY-MM-DD"},
+                "limit": {"type": "integer"},
+            },
+        },
+    },
 ]
 
 
