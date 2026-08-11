@@ -4,7 +4,7 @@ print("=== Gmail OAuth - Obtener Refresh Token ===")
 print()
 cid = input("Client ID: ").strip()
 csec = input("Client Secret: ").strip()
-redir = "http://127.0.0.1:8085/callback"
+redir = "http://127.0.0.1:9085/callback"
 scope = "https://www.googleapis.com/auth/gmail.readonly"
 code_box = []
 
@@ -18,7 +18,7 @@ class H(http.server.BaseHTTPRequestHandler):
     def log_message(self, *a):
         pass
 
-srv = http.server.HTTPServer(("127.0.0.1", 8085), H)
+srv = http.server.HTTPServer(("127.0.0.1", 9085), H)
 t = threading.Thread(target=srv.handle_request, daemon=True)
 t.start()
 
