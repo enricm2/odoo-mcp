@@ -430,6 +430,25 @@ _TOOLS = [
         },
     },
     {
+        "name": "crm_attach_from_gmail",
+        "description": (
+            "Descarga un adjunto de Gmail y lo sube directamente a un lead de Odoo CRM, "
+            "sin que el contenido del archivo pase por el contexto del LLM. "
+            "Ideal para PDFs y archivos grandes. "
+            "Obtén message_id y attachment_id con las tools de Gmail MCP."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "lead_id": {"type": "integer", "description": "ID del lead/oportunidad en Odoo"},
+                "message_id": {"type": "string", "description": "ID del mensaje de Gmail"},
+                "attachment_id": {"type": "string", "description": "ID del adjunto dentro del mensaje de Gmail"},
+                "filename": {"type": "string", "description": "Nombre del archivo (opcional, se intenta detectar automáticamente)"},
+            },
+            "required": ["lead_id", "message_id", "attachment_id"],
+        },
+    },
+    {
         "name": "crm_get_activities",
         "description": "Lista las actividades programadas de un lead u oportunidad de Odoo CRM (llamadas, reuniones, tareas pendientes, etc.).",
         "inputSchema": {
