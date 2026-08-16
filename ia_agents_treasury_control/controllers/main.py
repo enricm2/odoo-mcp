@@ -644,6 +644,156 @@ _TOOLS = [
             },
         },
     },
+    # ── WhatsApp Business ─────────────────────────────────────────────────────
+    {
+        "name": "wa_get_accounts",
+        "description": (
+            "Lista las cuentas WhatsApp Business configuradas en Odoo "
+            "(módulo uniasser_whatsapp). Muestra nombre, Phone Number ID, "
+            "WABA ID y estado de cada cuenta."
+        ),
+        "inputSchema": {"type": "object", "properties": {}},
+    },
+    {
+        "name": "wa_create_account",
+        "description": (
+            "Crea y configura una nueva cuenta WhatsApp Business en Odoo. "
+            "Requiere las credenciales obtenidas en el Meta Developer Dashboard: "
+            "phone_number_id, waba_id, access_token y webhook_verify_token."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "name": {"type": "string", "description": "Nombre descriptivo (ej: 'Uniasser WA Principal')"},
+                "phone_number_id": {"type": "string", "description": "Phone Number ID de Meta (no el número visible)"},
+                "waba_id": {"type": "string", "description": "WhatsApp Business Account ID de Meta"},
+                "access_token": {"type": "string", "description": "Token permanente del System User de Meta"},
+                "webhook_verify_token": {"type": "string", "description": "Token de verificación del webhook (lo eliges tú)"},
+                "app_secret": {"type": "string", "description": "App Secret de la App de Meta (para validar firmas HMAC del webhook)"},
+                "company_id": {"type": "integer", "description": "ID de empresa Odoo (por defecto: la principal)"},
+            },
+            "required": ["name", "phone_number_id", "waba_id", "access_token", "webhook_verify_token"],
+        },
+    },
+    {
+        "name": "wa_update_account",
+        "description": "Actualiza campos de una cuenta WhatsApp Business existente (token, nombre, verify token, etc.).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "account_id": {"type": "integer", "description": "ID de la cuenta a modificar"},
+                "name": {"type": "string"},
+                "phone_number_id": {"type": "string"},
+                "waba_id": {"type": "string"},
+                "access_token": {"type": "string"},
+                "app_secret": {"type": "string"},
+                "webhook_verify_token": {"type": "string"},
+                "active": {"type": "boolean"},
+            },
+            "required": ["account_id"],
+        },
+    },
+    {
+        "name": "wa_test_connection",
+        "description": (
+            "Prueba la conexión de una cuenta WhatsApp con la API de Meta. "
+            "Llama a GET /{phone_number_id} con el access_token y muestra "
+            "el número verificado o el error. Úsalo tras configurar una cuenta."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "account_id": {"type": "integer", "description": "ID de la cuenta (si solo hay una, se usa automáticamente)"},
+            },
+        },
+    },
+    {
+        "name": "wa_sync_templates",
+        "description": (
+            "Sincroniza las plantillas de mensaje aprobadas desde Meta a Odoo. "
+            "Necesario antes de poder enviar mensajes fuera de la ventana de 24h. "
+            "Las plantillas deben estar previamente aprobadas en Meta Business Manager."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "account_id": {"type": "integer", "description": "ID de la cuenta WhatsApp"},
+            },
+        },
+    },
+    {
+        "name": "wa_get_templates",
+        "description": "Lista las plantillas WhatsApp sincronizadas desde Meta con su estado (aprobada/pendiente/rechazada).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "account_id": {"type": "integer"},
+                "status": {"type": "string", "enum": ["approved", "pending", "rejected", "paused"],
+                           "description": "Filtrar por estado (por defecto: todas)"},
+            },
+        },
+    },
+    {
+        "name": "wa_get_conversations",
+        "description": (
+            "Lista las conversaciones activas de WhatsApp: último mensaje por contacto, "
+            "con timestamp, dirección y lead vinculado si existe."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "account_id": {"type": "integer"},
+                "limit": {"type": "integer", "default": 20, "description": "Número de conversaciones (por defecto 20)"},
+            },
+        },
+    },
+    {
+        "name": "wa_get_messages",
+        "description": (
+            "Muestra el hilo de mensajes con un contacto específico, "
+            "ordenados cronológicamente con estado de entrega (enviado/entregado/leído)."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "partner_id": {"type": "integer", "description": "ID del contacto en Odoo"},
+                "lead_id": {"type": "integer", "description": "Alternativamente, ID del lead para ver sus mensajes WA"},
+                "account_id": {"type": "integer"},
+                "limit": {"type": "integer", "default": 30},
+            },
+        },
+    },
+    {
+        "name": "wa_send_message",
+        "description": (
+            "Envía un mensaje WhatsApp a un contacto desde Odoo. "
+            "Si el contacto respondió en las últimas 24h, se puede enviar texto libre. "
+            "Fuera de esa ventana, usa una plantilla aprobada. "
+            "IMPORTANTE: solo envía si el usuario lo ha solicitado explícitamente."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "partner_id": {"type": "integer", "description": "ID del contacto en Odoo"},
+                "partner_name": {"type": "string", "description": "Nombre del contacto (alternativa a partner_id)"},
+                "body": {"type": "string", "description": "Texto del mensaje (para texto libre, dentro de ventana 24h)"},
+                "template_name": {"type": "string", "description": "Nombre de la plantilla (para mensajes fuera de ventana 24h)"},
+                "template_id": {"type": "integer", "description": "ID de la plantilla (alternativa a template_name)"},
+                "lead_id": {"type": "integer", "description": "Lead al que vincular el mensaje (opcional)"},
+                "account_id": {"type": "integer", "description": "Cuenta WhatsApp (por defecto: la primera activa)"},
+            },
+        },
+    },
+    {
+        "name": "wa_get_stats",
+        "description": "Estadísticas globales de WhatsApp: total de mensajes, tasa de lectura, conversaciones únicas.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "account_id": {"type": "integer"},
+            },
+        },
+    },
 ]
 
 
